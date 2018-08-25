@@ -14,6 +14,7 @@ export dirNames=$*
 
 env_var=$1
 
+rm -rf _html
 echo "npm run $env_var"
 npm run "$env_var"
 exit 0
