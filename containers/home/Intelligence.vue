@@ -48,8 +48,8 @@
                                 :height="200"></line-chart>
                 </div>
                 <div flex="box:mean" class="duration-tab">
-                    <div :class="{'active':duration===5}" @click.stop="durationCheck(5)">近5年</div>
-                    <div :class="{'active':duration===3}" @click.stop="durationCheck(3)">近3年</div>
+                    <div :class="{'year-active':duration===5}" @click.stop="durationCheck(5)">近5年</div>
+                    <div :class="{'year-active':duration===3}" @click.stop="durationCheck(3)">近3年</div>
                 </div>
 
             </div>
