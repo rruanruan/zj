@@ -1,0 +1,167 @@
+@charset "UTF-8";
+@import "rem";
+@import "variables";
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    word-break: break-all;
+    word-wrap: break-word;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    outline: 0;
+    vertical-align: baseline;
+}
+
+img {
+    border: 0 none;
+    vertical-align: top;
+    display: inline-block;
+    width: 100%;
+    height: auto;
+}
+
+button {
+    outline: none;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    background: none;
+    padding: 0 .5rem;
+    margin: 0;
+    white-space: nowrap;
+    position: relative;
+    text-overflow: ellipsis;
+    font-size: .7rem;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+}
+
+input, textarea {
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    outline: none;
+    border: none;
+    resize: none;
+    -webkit-appearance: none;
+    vertical-align: middle;
+
+}
+
+a {
+    text-decoration: none;
+}
+
+input::-webkit-input-placeholder { /* WebKit browsers */
+    color: @color-text-gray;
+    vertical-align: middle;
+    font-size: .7rem;
+    line-height: normal;
+}
+
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: @color-text-gray;
+    vertical-align: middle;
+    font-size: .7rem;
+    line-height: normal;
+}
+
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: @color-text-gray;
+    vertical-align: middle;
+    font-size: .7rem;
+    line-height: normal;
+}
+
+input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: @color-text-gray;
+    vertical-align: middle;
+    font-size: .7rem;
+    line-height: normal;
+}
+
+body {
+    font-family: @font-family-default;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 640px;
+    color: @color-text;
+    background: #f3f3f3;
+    font-size: .7rem;
+    text-size-adjust: 100% !important
+}
+
+#app {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+}
+
+.btn-primary {
+    border-radius: 4px;
+    color: #fff;
+    &:disabled {
+        color: #aaa;
+    }
+}
+
+.btn-default {
+    background-color: @bg-main;
+    border-radius: 4px;
+}
+
+.ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+[flex], [flex-box] {
+    overflow-x: hidden;
+}
+
+[event-prevent] {
+    pointer-events: none;
+}
+
+.content-warp {
+    position: relative;
+    height: 100%;
+}
+
+.content-body {
+    background: #fff;
+
+}
+
+
+

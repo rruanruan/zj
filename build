@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# 正常退出
+set -e
+
+if [ $# -lt 1 ]; then
+    echo "usage: build <env> <dirs>"
+    echo "example: "
+    echo "         build dev"
+    exit 0
+fi
+echo "Quoted Values: $*"
+export dirNames=$*
+
+
+env_var=$1
+
+echo "npm run $env_var"
+npm run "$env_var"
+exit 0
