@@ -109,39 +109,4 @@
         }
     }
 </script>
-<style scoped lang="less">
-    .index {
-        width: 100%;
-        height: 100%;
-        overflow-y: scroll;
-        .content {
-            padding: .8rem;
-            background: #fff;
-            margin-top: .5rem;
-            text-align: center;
-            .title {
-                font-size: .7rem;
-                color: #333;
-                font-weight: bold;
-            }
-            .info {
-                margin-top: 1rem;
-                color: #666;
-            }
-            .info-highlight {
-                font-size: 1.5rem;
-                margin-top: 1rem;
-                color: red;
-            }
-            .chart-box {
-                margin-top: 1rem;
-                // background: linear-gradient(top,#272727,#585858,#585858,#2f2f2f);
-                color: #666;
-                text-align: center;
-                font-size: .6rem;
-                padding: .5rem 0;
-            }
-        }
 
-    }
-</style>

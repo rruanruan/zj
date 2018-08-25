@@ -1,6 +1,6 @@
 <template>
-    <div class="intelligence">
-        <div class="body">
+    <div class="content-warp">
+        <div class="intelligence">
             <div class="content content1" flex="box:mean">
                 <div>
                     <img src="../../images/intelligence/trend.png" alt="" class="icon">
@@ -54,9 +54,9 @@
 
             </div>
         </div>
-
         <tabs type="intelligence"></tabs>
     </div>
+
 </template>
 
 <script>
@@ -69,7 +69,7 @@
         name: 'Intelligence',
         data() {
             return {
-                duration:5,
+                duration: 5,
                 active: 0,
                 datas: {},
                 options: {
@@ -136,8 +136,8 @@
             checkTab(num) {
                 this.active = num;
             },
-            durationCheck(num){
-               this.duration = num;
+            durationCheck(num) {
+                this.duration = num;
             },
             getData() {
                 this.datas = {
@@ -190,83 +190,4 @@
         }
     }
 </script>
-<style lang="less" scoped>
-    .intelligence {
-        .body {
-            width: 100%;
-            height: 100%;
-            overflow-y: scroll;
-        }
 
-        .content1 {
-            text-align: center;
-        }
-        .big {
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-        .content {
-            margin-top: .5rem;
-            background: #fff;
-            padding: .8rem;
-            position: relative;
-            .icon {
-                width: 1.1rem;
-            }
-            .info {
-                margin-top: .25rem;
-                font-size: .6rem;
-                color: #666;
-            }
-            .title {
-                font-weight: bold;
-                color: #333;
-            }
-            .high-light {
-                color: red;
-            }
-            .doughnut-box {
-                margin-top: 1rem;
-            }
-            .doughnut-info {
-                position: absolute;
-                left: 23%;
-                top: 54%;
-                color: #73b3be;
-            }
-            .info-box {
-                text-align: center;
-            }
-        }
-        .content-2 {
-            background: #fff;
-            margin-top: .5rem;
-            padding-bottom: 2rem;
-        }
-        .line-tab {
-            text-align: center;
-            height: 2rem;
-            border-bottom: 1px solid #dedede;
-            line-height: 2rem;
-            margin-bottom: 1rem;
-            .active {
-                color: #1a478e;
-                border-bottom: 2px solid #1a478e;
-                font-weight: bold;
-            }
-        }
-        .duration-tab {
-            border: 1px solid #1a478e;
-            margin: 1rem 1.2rem;
-            height: 1.8rem;
-            line-height: 1.8rem;
-            border-radius: 0.4rem;
-            color: #1a478e;
-            text-align: center;
-            .active{
-                background: #1a478e;
-                color: #fff;
-            }
-        }
-    }
-</style>
