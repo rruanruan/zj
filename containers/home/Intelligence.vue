@@ -131,13 +131,39 @@
         computed: {},
         created() {
             this.getData();
+            this.getLineData([22,2],[3,33]);
         },
         methods: {
             checkTab(num) {
                 this.active = num;
+                if(num&&this.duration===5){
+                    this.getLineData([67,8],[33,7])
+                }
+                if(num&&this.duration===3){
+                    this.getLineData([0,33],[65,7])
+                }
+                if(this.duration===5&&!num){
+                    this.getLineData([25,3],[74,7])
+                }
+                if(this.duration===3&&!num){
+                    this.getLineData([73,3],[25,7])
+                }
+
             },
             durationCheck(num) {
                 this.duration = num;
+                if(num===5&&this.active){
+                    this.getLineData([67,8],[33,7])
+                }
+                if(num===3&&this.active){
+                    this.getLineData([0,33],[65,7])
+                }
+                if(num===5&&!this.active){
+                    this.getLineData([25,3],[74,7])
+                }
+                if(num==3&&!this.active){
+                    this.getLineData([73,3],[25,7])
+                }
             },
             getData() {
                 this.datas = {
@@ -157,13 +183,15 @@
                             }
                         ]
                 };
+            },
+            getLineData(arr1,arr2){
                 this.lineDatas = {
                     labels: ['2015-06-26', '2018-06-25'],
                     datasets: [
                         {
                             label: '等级5',
                             backgroundColor: '#ef8159',
-                            data: [1, 2],
+                            data: arr1,
                             borderColor: '#ef8159',
                             fill: false,
                             borderWidth: 1,
@@ -176,7 +204,7 @@
                             label: '比较基准（56%中证全债+44%上证指数）',
                             backgroundColor: '#5b92b5',
                             borderColor: '#5b92b5',
-                            data: [12, 22],
+                            data: arr2,
                             fill: false,
                             borderWidth: 1,
                             pointBackgroundColor: 'transparent',
