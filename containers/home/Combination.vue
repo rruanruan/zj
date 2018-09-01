@@ -34,12 +34,12 @@
             </div>
 
             <div class="content-body items">
-                <div class="item" flex>
+                <div class="item" flex @click.stop="linkList">
                     <div flex-box="1" flex="cross:center">
                         <div class="item-icon">
                             <img src="../../images/combination/cyjj.png"/>
                         </div>
-                        <span>持有基金</span>
+                        <span>持有组合</span>
                     </div>
                     <div class="arrow-right" flex-box="0" flex="cross:center">
                         <img src="../../images/arrow-right.png" alt="">
@@ -114,7 +114,11 @@
         computed: {},
         created() {
         },
-        methods: {},
+        methods: {
+            linkList() {
+                window.location.href = '../comb/comb-list.html';
+            }
+        },
         mounted() {
         }
     }

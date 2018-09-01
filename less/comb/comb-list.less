@@ -1,0 +1,52 @@
+@charset "UTF-8";
+@import "../variables";
+
+.comb-header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 2.3rem;
+    width: 100%;
+    background: #fff;
+    padding: .5rem .8rem;
+    font-size: .8rem;
+    border-bottom: 1px solid #ddd;
+    z-index: 2;
+    span {
+        color: @color-text;
+    }
+}
+
+.operate {
+    width: 4rem;
+    text-align: center;
+}
+
+.max-return {
+    width: 4rem;
+}
+
+.rate {
+    width: 4rem;
+}
+
+.btn-delete {
+    margin: auto;
+    color: @main-color;
+}
+
+.comb-list {
+    position: relative;
+    padding-top: 2.3rem;
+    background: #fff;
+    max-height: 100%;
+    overflow-y: auto;
+    .comb-item {
+        padding: .5rem .8rem;
+        border-bottom: 1px solid #ddd;
+        color: @color-text-gray;
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
