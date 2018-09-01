@@ -25,6 +25,7 @@
                 </div>
                 <div class="doughnut-box">
                     <chart :options="option"></chart>
+
                 </div>
             </div>
             <div class="content" flex="main:justify">
@@ -73,7 +74,7 @@
         name: 'Intelligence',
         data() {
             return {
-                option:{},
+                option: {},
                 duration: 5,
                 active: 0,
                 lineOptions: {
@@ -122,42 +123,47 @@
         computed: {},
         created() {
             this.getData();
-            this.getLineData([22,2],[3,33]);
+            this.getLineData([22, 2], [3, 33]);
         },
         methods: {
             checkTab(num) {
                 this.active = num;
-                if(num&&this.duration===5){
-                    this.getLineData([67,8],[33,7])
+                if (num && this.duration === 5) {
+                    this.getLineData([67, 8], [33, 7])
                 }
-                if(num&&this.duration===3){
-                    this.getLineData([0,33],[65,7])
+                if (num && this.duration === 3) {
+                    this.getLineData([0, 33], [65, 7])
                 }
-                if(this.duration===5&&!num){
-                    this.getLineData([25,3],[74,7])
+                if (this.duration === 5 && !num) {
+                    this.getLineData([25, 3], [74, 7])
                 }
-                if(this.duration===3&&!num){
-                    this.getLineData([73,3],[25,7])
+                if (this.duration === 3 && !num) {
+                    this.getLineData([73, 3], [25, 7])
                 }
 
             },
             durationCheck(num) {
                 this.duration = num;
-                if(num===5&&this.active){
-                    this.getLineData([67,8],[33,7])
+                if (num === 5 && this.active) {
+                    this.getLineData([67, 8], [33, 7])
                 }
-                if(num===3&&this.active){
-                    this.getLineData([0,33],[65,7])
+                if (num === 3 && this.active) {
+                    this.getLineData([0, 33], [65, 7])
                 }
-                if(num===5&&!this.active){
-                    this.getLineData([25,3],[74,7])
+                if (num === 5 && !this.active) {
+                    this.getLineData([25, 3], [74, 7])
                 }
-                if(num==3&&!this.active){
-                    this.getLineData([73,3],[25,7])
+                if (num == 3 && !this.active) {
+                    this.getLineData([73, 3], [25, 7])
                 }
             },
             getData() {
-
+                let pieData = [{value: 43.22, name: 1, itemStyle: {color: '#eed955'}},
+                    {value: 31.17, name: 2, itemStyle: {color: '#da7574'}},
+                    {value: 13.55, name: 3, itemStyle: {color: '#e6b144'}},
+                    {value: 8.53, name: 4, itemStyle: {color: '#de8551'}},
+                    {value: 4.53, name: 5, itemStyle: {color: '#80b273'}},
+                    {value: 0, name: 6, itemStyle: {color: '#e2ea59'}}];
 
                 this.option = {
                     tooltip: {
@@ -167,23 +173,48 @@
                     legend: {
                         orient: 'vertical',
                         x: 'right',
-                        y:'center',
-                        data:['香港股票','大盘股票','美国股票','小盘股票','黄金','其他']
+                        y: 'center',
+                        formatter: function (name) {
+                            if (name === 1)
+                                return '香港股票' + pieData[name - 1].value + '%';
+                            if (name === 2)
+                                return '大盘股票' + pieData[name - 1].value + '%';
+                            if (name === 3)
+                                return '美国股票' + pieData[name - 1].value + '%';
+                            if (name === 4)
+                                return '小盘股票' + pieData[name - 1].value + '%';
+                            if (name === 5)
+                                return '黄金' + pieData[name - 1].value + '%';
+                            if (name === 6)
+                                return '其他' + pieData[name - 1].value + '%';
+                        },
+                        align: 'left',
+                        data: [{name: 1, icon: 'circle'},
+                            {name: 2, icon: 'circle'},
+                            {name: 3, icon: 'circle'},
+                            {name: 4, icon: 'circle'},
+                            {name: 5, icon: 'circle'},
+                            {name: 6, icon: 'circle'}]
                     },
                     series: [
                         {
-                            name:'配比说明',
-                            type:'pie',
-                            radius: ['30%', '60%'],
+                            name: '配比说明',
+                            type: 'pie',
+                            radius: ['40%', '80%'],
                             avoidLabelOverlap: false,
-                            center: ['35%', '50%'],
+                            center: ['30%', '50%'],
                             label: {
                                 normal: {
-                                    show: false,
-                                    position: 'center'
+                                    show: true,
+                                    position: 'center',
+                                    formatter: function () {
+                                        return '配比说明'
+                                    },
+                                    color:'#73b3be',
+                                    fontSize:14
                                 },
                                 emphasis: {
-                                    show: true,
+                                    show: false,
                                     textStyle: {
                                         fontSize: '30',
                                         fontWeight: 'bold'
@@ -195,14 +226,7 @@
                                     show: false
                                 }
                             },
-                            data:[
-                                {value:43.22, name:'香港股票',itemStyle:{color:'#eed955'}},
-                                {value:31.17, name:'大盘股票',itemStyle:{color:'#da7574'}},
-                                {value:13.55, name:'美国股票',itemStyle:{color:'#e6b144'}},
-                                {value:8.53, name:'小盘股票',itemStyle:{color:'#de8551'}},
-                                {value:4.53, name:'黄金',itemStyle:{color:'#80b273'}},
-                                {value:0, name:'其他',itemStyle:{color:'#e2ea59'}}
-                            ]
+                            data: pieData
                         }
                     ]
                 };
@@ -212,7 +236,7 @@
                           console.log(resp);
                       })*/
             },
-            getLineData(arr1,arr2){
+            getLineData(arr1, arr2) {
                 this.lineDatas = {
                     labels: ['2015-06-26', '2018-06-25'],
                     datasets: [
