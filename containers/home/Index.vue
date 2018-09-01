@@ -27,6 +27,7 @@
     import '../../less/home/index.less';
     import Tabs from '../../components/Tabs';
     import IndexBar from '../../tools/bar';
+    import http from '../../utils/http';
 
     export default {
         name: 'Index',
@@ -86,13 +87,13 @@
         methods: {
             getData() {
                 this.datas = {
-                    labels: ['电子元器件', '计算机', '通信', '电力设备', '有色金属', '非银行金融', '国防军工', '传媒', '机械', '综合', '建材', '轻工制造', '家电', '食品饮料', '纺织服装', '基础化工', '餐饮旅游', '钢铁', '石油石化', '农林牧渔', '银行', '商贸零售', '建筑', '汽车', '电力及公用事业', '煤炭', '交通运输','医药'],
+                    labels: ['电子元器件', '计算机', '通信', '电力设备', '有色金属', '非银行金融', '国防军工', '传媒', '机械', '综合', '建材', '轻工制造', '家电', '食品饮料', '纺织服装', '基础化工', '餐饮旅游', '钢铁', '石油石化', '农林牧渔', '银行', '商贸零售', '建筑', '汽车', '电力及公用事业', '煤炭', '交通运输', '医药'],
                     datasets:
                         [
                             {
                                 label: '七日年化',
-                                backgroundColor: ['#ce2d21', '#ce2d21','#ce2d21','#ce2d21','#ce2d21','#ce2d21','#ce2d21','#ce2d21','#ce2d21','#ce2d21','#ce2d21','#ce2d21','#ce2d21','#ce2d21','green','green','green','green','green','green','green','green','green','green','green','green','green','green','green','green','green'],
-                                data: [.2,.18,.14,.12,.07,.06,.05,.04,.03,.03,.03,.005,0,0,-.01,-.02,-.04,-.05,-.06,-.07,-.08,-.085,-.085,-.09,-.1,-.12,-.13,-.14],
+                                backgroundColor: ['#ce2d21', '#ce2d21', '#ce2d21', '#ce2d21', '#ce2d21', '#ce2d21', '#ce2d21', '#ce2d21', '#ce2d21', '#ce2d21', '#ce2d21', '#ce2d21', '#ce2d21', '#ce2d21', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green'],
+                                data: [.2, .18, .14, .12, .07, .06, .05, .04, .03, .03, .03, .005, 0, 0, -.01, -.02, -.04, -.05, -.06, -.07, -.08, -.085, -.085, -.09, -.1, -.12, -.13, -.14],
                                 fill: false,
                                 borderWidth: 1,
                                 pointBackgroundColor: 'transparent',
@@ -106,6 +107,7 @@
             }
         },
         mounted() {
+            http.get('/smartinfo/list', {smartType: 3})
         }
     }
 </script>
