@@ -22,17 +22,15 @@ function get(path, data = {}) {
             return response.data;
         }
 
-        return Promise.reject(error);
+        return Promise.reject({
+            msg: 'error',
+            code: -1
+        });
     }).then(data => {
         if (data.code === 200) {
             return data.data;
         }
-        let error = {
-            msg: data.msg,
-            code: data.code,
-        };
-
-        return Promise.reject(error);
+        return Promise.reject(data);
     });
 }
 
@@ -54,27 +52,15 @@ function post(path, data = {}) {
             return response.data;
         }
 
-        return Promise.reject(error);
+          return Promise.reject({
+            msg: 'error',
+            code: -1
+        });
     }).then(data => {
         if (data.code === 200) {
             return data.data;
         }
-        let error = {
-            msg: data.msg,
-            reason: 'server',
-            code: data.code,
-        };
-        return Promise.reject(error);
-    }).catch((xhr) => {
-        if (xhr && xhr.reason === 'server') {
-            return Promise.reject(xhr);
-        }
-        let error = {};
-        let responseError = xhr.response || xhr.request;
-        let {status, statusText} = responseError;
-        error.code = status;
-        error.msg = statusText;
-        return Promise.reject(error);
+        return Promise.reject(data);
     })
 }
 

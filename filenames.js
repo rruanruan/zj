@@ -10,17 +10,29 @@ dir.map(subDir => {
     let files = fs.readdirSync(path.resolve(__dirname, `./views/${subDir}`));
     if (dirs.length) {
         if (dirs.includes(subDir)) {
-            files.map(filename => {
-                fileNames.push(`${subDir}/${filename}`);
-            });
+            pushFiles(files, subDir);
         }
         return false;
     }
-    files.map(filename => {
-        fileNames.push(`${subDir}/${filename}`);
-    });
+    pushFiles(files, subDir);
+
 
 });
+
+function pushFiles(files, subDir) {
+    files.map(filename => {
+        let file = fs.readFileSync(path.resolve(__dirname, `./views/${subDir}/${filename}`), 'utf-8');
+        let titles = file.match(/document\.title.*\n/)[0];
+        let title = '';
+        if (titles.length) {
+            title = titles.split('=')[1].replace(/['|"|;|\n]/g, '');
+        }
+        fileNames.push({
+            name: `${subDir}/${filename}`,
+            title
+        });
+    });
+}
 
 console.log(fileNames);
 if (fileNames.length === 0) {
@@ -28,3 +40,4 @@ if (fileNames.length === 0) {
     process.exit(0);
 }
 module.exports = fileNames;
+

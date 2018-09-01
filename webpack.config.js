@@ -179,10 +179,11 @@ module.exports = (env = 'dev') => {
     let files = require('./filenames') || []; // 填写需要编译的js文件名
     let output = require('./output')[env];
     files.map(file => {
-        let entryJS = file.replace('.js', '');
-        entry[entryJS] = path.resolve(__dirname, `./views/${file}`);
+
+        let entryJS = file.name.replace('.js', '');
+        entry[entryJS] = path.resolve(__dirname, `./views/${file.name}`);
         let htmlConfig = {
-            title: '智能量化',
+            title: file.title || '智能量化',
             env,
             favicon: path.resolve(__dirname, './images/logo.png'),
             chunks: ['libs', 'utils', entryJS],
