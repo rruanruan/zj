@@ -32,8 +32,6 @@
     import http from '../../utils/http';
     import 'echarts/lib/chart/bar';
     import 'echarts/lib/component/tooltip';
-    import 'echarts/lib/chart/line';
-    import 'echarts/lib/component/polar';
     Vue.component('chart', ECharts);
 
     export default {
@@ -51,7 +49,7 @@
         },
         methods: {
             getData() {
-                let labelRight = {normal: {label : {position: 'inside'}}};
+                let labelRight = {position:'left'};
                      this.option = {
                          tooltip : {
                              trigger: 'axis',
@@ -85,28 +83,28 @@
                                          borderRadius: 5,
                                          label : {
                                              show: true,
-                                             position: 'left',
+                                             position: 'insideRight',
                                              formatter: '{b}',
                                              color:'#FFF'
                                          }
                                      }},
                                  data:[
-                                     {value:.2,itemStyle:{normal:{label:{position:'inside'}}}},
-                                     .18,
-                                     .14,
-                                     .12,
-                                     .07,.06,.05,.04,.03,.03,.03,.005,0,0,-.01,-.02,-.04,-.05,-.06,-.07,-.08,-.085,-.085,-.09,-.1,-.12,-.13,
-                                     {value:-.14,itemStyle:labelRight}
-
-                       /*  {value:-0.07, itemStyle:labelRight},
-                                     {value:-0.09, itemStyle:labelRight},
-                                     0.2, 0.44,
-                                     {value:-0.23, itemStyle:labelRight},
-                                     0.08,
-                                     {value:-0.17, itemStyle:labelRight},
-                                     0.47,
-                                     {value:-0.36, itemStyle:labelRight},
-                                     0.18*/
+                                     {value:.2,label:labelRight},
+                                     {value:.18,label:labelRight},
+                                     {value:.14,label:labelRight},
+                                     {value:.12,label:labelRight},
+                                     {value:.07,label:labelRight},
+                                     {value:.06,label:labelRight},
+                                     {value:.05,label:labelRight},
+                                     {value:.04,label:labelRight},
+                                     {value:.03,label:labelRight},
+                                     {value:.03,label:labelRight},
+                                     {value:.03,label:labelRight},
+                                     {value:.005,label:labelRight},
+                                     {value:0,label:labelRight},
+                                     {value:0,label:labelRight},
+                                     -.01,-.02,-.04,-.05,-.06,-.07,-.08,-.085,-.085,-.09,-.1,-.12,-.13,
+                                     -.14
                                  ]
                              }
                          ]

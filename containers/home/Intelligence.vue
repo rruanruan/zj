@@ -24,8 +24,7 @@
                     本周推荐：<span class="high-light">趋势策略</span>
                 </div>
                 <div class="doughnut-box">
-                    <p class="doughnut-info">配比说明</p>
-                    <doughnut :data="datas" :options="options" :chart-data="datas" :height="200"></doughnut>
+                    <chart :options="option"></chart>
                 </div>
             </div>
             <div class="content" flex="main:justify">
@@ -62,30 +61,21 @@
 <script>
     import '../../less/home/intelligence.less';
     import Tabs from '../../components/Tabs';
-    import Doughnut from '../../tools/doughnut';
     import LineChart from '../../tools/line';
     import http from '../../utils/http';
+    import Vue from 'vue';
+    import ECharts from 'vue-echarts/components/ECharts.vue';
+    import 'echarts/lib/chart/pie';
+    import 'echarts/lib/component/legend';
 
+    Vue.component('chart', ECharts);
     export default {
         name: 'Intelligence',
         data() {
             return {
+                option:{},
                 duration: 5,
                 active: 0,
-                datas: {},
-                options: {
-                    scales: {},
-                    legend: {
-                        display: true,
-                        position: 'right',
-                        labels: {
-                            usePointStyle: true,
-                            padding: 20
-                        }
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false
-                },
                 lineOptions: {
                     tooltips: {
                         mode: 'index'
@@ -128,7 +118,7 @@
             };
         },
         props: [],
-        components: {Tabs, Doughnut, LineChart},
+        components: {Tabs, LineChart},
         computed: {},
         created() {
             this.getData();
@@ -167,27 +157,60 @@
                 }
             },
             getData() {
-              /*  http.get('/smartinfo/list',{smartType:3})
-                    .then(resp=>{
-                        console.log(resp);
-                    })*/
-                this.datas = {
-                    labels: ['香港股票43.22%', '大盘股票30.17%', '美国股票13.55%', '小盘股票8.53%', '黄金4.53%', '其他0.00%'],
-                    datasets:
-                        [
-                            {
-                                label: '七日年化',
-                                backgroundColor: ['#eed955', '#da7574', '#e6b144', '#de8551', '#80b273', '#e2ea59'],
-                                data: [43.22, 30.17, 13.55, 8.53, 4.53, 0.00],
-                                fill: false,
-                                borderWidth: 1,
-                                pointBackgroundColor: 'transparent',
-                                pointStyle: 'circle',
-                                hitRadius: 10,
-                                radius: 0
-                            }
-                        ]
+
+
+                this.option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        x: 'right',
+                        y:'center',
+                        data:['香港股票','大盘股票','美国股票','小盘股票','黄金','其他']
+                    },
+                    series: [
+                        {
+                            name:'配比说明',
+                            type:'pie',
+                            radius: ['30%', '60%'],
+                            avoidLabelOverlap: false,
+                            center: ['35%', '50%'],
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data:[
+                                {value:43.22, name:'香港股票',itemStyle:{color:'#eed955'}},
+                                {value:31.17, name:'大盘股票',itemStyle:{color:'#da7574'}},
+                                {value:13.55, name:'美国股票',itemStyle:{color:'#e6b144'}},
+                                {value:8.53, name:'小盘股票',itemStyle:{color:'#de8551'}},
+                                {value:4.53, name:'黄金',itemStyle:{color:'#80b273'}},
+                                {value:0, name:'其他',itemStyle:{color:'#e2ea59'}}
+                            ]
+                        }
+                    ]
                 };
+
+                /*  http.get('/smartinfo/list',{smartType:3})
+                      .then(resp=>{
+                          console.log(resp);
+                      })*/
             },
             getLineData(arr1,arr2){
                 this.lineDatas = {
