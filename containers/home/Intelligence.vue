@@ -64,6 +64,7 @@
     import Tabs from '../../components/Tabs';
     import Doughnut from '../../tools/doughnut';
     import LineChart from '../../tools/line';
+    import http from '../../utils/http';
 
     export default {
         name: 'Intelligence',
@@ -166,6 +167,10 @@
                 }
             },
             getData() {
+              /*  http.get('/smartinfo/list',{smartType:3})
+                    .then(resp=>{
+                        console.log(resp);
+                    })*/
                 this.datas = {
                     labels: ['香港股票43.22%', '大盘股票30.17%', '美国股票13.55%', '小盘股票8.53%', '黄金4.53%', '其他0.00%'],
                     datasets:
@@ -212,7 +217,7 @@
                         }
                     ]
                 };
-            }
+            },
         },
         mounted() {
         }

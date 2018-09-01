@@ -6,7 +6,9 @@ const happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const happyPlugins = require('./happPackPlugins');
-
+let resolve = (dir) => {
+    return path.join(__dirname, '..', dir)
+}
 const config = {
     mode: 'development',
     entry: {
@@ -63,6 +65,14 @@ const config = {
                     {
                         loader: 'happypack/loader?id=babel'
                     }]
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                include: [
+                    resolve('node_modules/vue-echarts'),
+                    resolve('node_modules/resize-detector')
+                ]
             },
             {
                 test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
