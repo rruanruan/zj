@@ -7,7 +7,9 @@
             <span flex-box="0" class="operate">操作</span>
         </div>
         <div class="comb-list">
-            <div class="comb-item" v-for="(item,index) in list" flex="box:mean" :key="index">
+            <div class="comb-item" v-for="(item,index) in list"
+                 @click.stop="linkDetail(item)"
+                 flex="box:mean" :key="index">
                 <span flex-box="1">{{item.time}}</span>
                 <span flex-box="0" class="rate">{{item.rate}}%</span>
                 <span flex-box="0" class="max-return">{{item.maxReturn}}%</span>
@@ -135,6 +137,10 @@
                         Toast('删除成功');
                     }
                 });
+            },
+            linkDetail(item) {
+                console.log(item);
+                window.location.href = './comb-detail.html';
             }
         },
         mounted() {
