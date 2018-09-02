@@ -53,6 +53,9 @@
                     <div :class="{'year-active':duration===5}" @click.stop="durationCheck(5)">近5年</div>
                     <div :class="{'year-active':duration===3}" @click.stop="durationCheck(3)">近3年</div>
                 </div>
+                <div @click.stop="addCombination" class="add-combination">
+                    添加到我的组合
+                </div>
 
             </div>
         </div>
@@ -62,6 +65,7 @@
 </template>
 
 <script>
+    import {Toast} from 'mint-ui';
     import '../../less/home/intelligence.less';
     import Tabs from '../../components/Tabs';
     import http from '../../utils/http';
@@ -93,6 +97,9 @@
             this.checkType(this.type);
         },
         methods: {
+            addCombination(){
+                Toast('已添加到我的组合');
+            },
             checkType(num) {
                 this.type = num;
                 let pieData = [];
@@ -248,7 +255,6 @@
                         }
                     ]
                 };
-
                 /*  http.get('/smartinfo/list',{smartType:3})
                       .then(resp=>{
                           console.log(resp);

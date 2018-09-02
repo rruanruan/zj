@@ -62,6 +62,7 @@
                                  type : 'value',
                                  position: 'top',
                                  splitLine: {lineStyle:{type:'dashed'}},
+                                 axisLabel:{color:'#fff'}
                              }
                          ],
                          yAxis : [
