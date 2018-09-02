@@ -2,25 +2,25 @@
     <div class="content-warp">
         <div class="intelligence">
             <div class="content content1" flex="box:mean">
-                <div>
+                <div @click.stop="checkType(1)">
                     <img src="../../images/intelligence/trend.png" alt="" class="icon">
                     <p class="info">趋势策略</p>
                 </div>
-                <div>
+                <div @click.stop="checkType(2)">
                     <img src="../../images/intelligence/trade.png" alt="" class="icon">
                     <p class="info">回转交易策略</p>
                 </div>
-                <div>
+                <div @click.stop="checkType(3)">
                     <img src="../../images/intelligence/ai.png" alt="" class="icon">
                     <p class="info">AI策略</p>
                 </div>
-                <div>
+                <div @click.stop="checkType(4)">
                     <img src="../../images/intelligence/custom.png" alt="" class="icon">
                     <p class="info">自定义策略</p>
                 </div>
             </div>
             <div class="content">
-                <div class="title">
+                <div class="title" v-if="type===1">
                     本周推荐：<span class="high-light">趋势策略</span>
                 </div>
                 <div class="doughnut-box">
@@ -30,11 +30,11 @@
             </div>
             <div class="content" flex="main:justify">
                 <div class="info-box">
-                    <p class="high-light big">10.13%</p>
+                    <p class="high-light big">{{rate}}</p>
                     <p class="info">预期年化收益率</p>
                 </div>
                 <div class="info-box">
-                    <p class="high-light big">6.13%</p>
+                    <p class="high-light big">{{maxReback}}</p>
                     <p class="info">预期最大回撤</p>
                 </div>
             </div>
@@ -64,7 +64,6 @@
 <script>
     import '../../less/home/intelligence.less';
     import Tabs from '../../components/Tabs';
-    import LineChart from '../../tools/line';
     import http from '../../utils/http';
     import Vue from 'vue';
     import ECharts from 'vue-echarts/components/ECharts.vue';
@@ -81,56 +80,108 @@
                 option: {},
                 duration: 5,
                 active: 0,
-                lineOption: {}
+                lineOption: {},
+                type: 1,
+                rate: '10.63%',
+                maxReback: '66.03%'
             };
         },
         props: [],
-        components: {Tabs, LineChart},
+        components: {Tabs},
         computed: {},
         created() {
-            this.getData();
-            this.getLineData([22, 2], [3, 33]);
+            this.checkType(this.type);
         },
         methods: {
+            checkType(num) {
+                this.type = num;
+                let pieData = [];
+                let levelFive = [];
+                let argLongName = [];
+                if (num === 1) {
+                    pieData = [{value: 43.22, name: 1, itemStyle: {color: '#eed955'}},
+                        {value: 31.17, name: 2, itemStyle: {color: '#da7574'}},
+                        {value: 13.55, name: 3, itemStyle: {color: '#e6b144'}},
+                        {value: 8.53, name: 4, itemStyle: {color: '#de8551'}},
+                        {value: 4.53, name: 5, itemStyle: {color: '#80b273'}},
+                        {value: 0, name: 6, itemStyle: {color: '#e2ea59'}}];
+                    this.rate = '63.34%';
+                    this.maxReback = '0.03%';
+                    levelFive = [-.2, 0, .1, .2, .05, -.1, .01];
+                    argLongName = [.01, -.1, .05, .2, .1, 0, -.2];
+                }
+                if (num === 2) {
+                    pieData = [{value: 13.22, name: 1, itemStyle: {color: '#eed955'}},
+                        {value: 10.17, name: 2, itemStyle: {color: '#da7574'}},
+                        {value: 43.55, name: 3, itemStyle: {color: '#e6b144'}},
+                        {value: 33.53, name: 4, itemStyle: {color: '#de8551'}},
+                        {value: 2.53, name: 5, itemStyle: {color: '#80b273'}},
+                        {value: 1, name: 6, itemStyle: {color: '#e2ea59'}}];
+                    this.rate = '2.22%';
+                    this.maxReback = '1.11%';
+                    levelFive = [77.2, 3, 22, 2, 66, -11, .01];
+                    argLongName = [4.01, .1, 5.05, 2.2, 77.1, 40, 3.2];
+                }
+                if (num === 3) {
+                    pieData = [{value: 2.22, name: 1, itemStyle: {color: '#eed955'}},
+                        {value: 71.17, name: 2, itemStyle: {color: '#da7574'}},
+                        {value: 3.55, name: 3, itemStyle: {color: '#e6b144'}},
+                        {value: 45.53, name: 4, itemStyle: {color: '#de8551'}},
+                        {value: 2.53, name: 5, itemStyle: {color: '#80b273'}},
+                        {value: 5, name: 6, itemStyle: {color: '#e2ea59'}}];
+                    this.rate = '99.11%';
+                    this.maxReback = '44.47%';
+                    levelFive = [34.2, 30, 4.1, 5.2, 32.05, 11.1, 21];
+                    argLongName = [55, 2, .05, 22, 3, 44, .77];
+                }
+                if (num === 4) {
+                    pieData = [{value: 80.22, name: 1, itemStyle: {color: '#eed955'}},
+                        {value: 1.17, name: 2, itemStyle: {color: '#da7574'}},
+                        {value: 1.55, name: 3, itemStyle: {color: '#e6b144'}},
+                        {value: 0.53, name: 4, itemStyle: {color: '#de8551'}},
+                        {value: 6.53, name: 5, itemStyle: {color: '#80b273'}},
+                        {value: 0, name: 6, itemStyle: {color: '#e2ea59'}}];
+                    this.rate = '60.34%';
+                    this.maxReback = '13.95%';
+                    levelFive = [-33.2, 11, .2, 3.54, 1.05, 44.1, 1.01];
+                    argLongName = [-.01, .1, -.05, 2.2, 45.1, 0, 22.2];
+                }
+
+                this.getData(pieData);
+                this.getLineData(levelFive, argLongName);
+            },
             checkTab(num) {
                 this.active = num;
                 if (num && this.duration === 5) {
-                    this.getLineData([67, 8], [33, 7])
+                    this.getLineData([67, 8,44,33,2.2,33,2], [-.33, -7,22,74,23,23,6]);
                 }
                 if (num && this.duration === 3) {
-                    this.getLineData([0, 33], [65, 7])
+                    this.getLineData([.43, 12,56,34,67,23,56], [65, 7,23,76,34,76,23]);
                 }
                 if (this.duration === 5 && !num) {
-                    this.getLineData([25, 3], [74, 7])
+                    this.getLineData([25, 3,43,22,54,23,78], [74, 7,77,34,22,4.4,2.3]);
                 }
                 if (this.duration === 3 && !num) {
-                    this.getLineData([73, 3], [25, 7])
+                    this.getLineData([73, 3,76,23,88,55,2.2], [25, 7,22,89,32,4.5,34]);
                 }
 
             },
             durationCheck(num) {
                 this.duration = num;
                 if (num === 5 && this.active) {
-                    this.getLineData([67, 8], [33, 7])
+                    this.getLineData([67, 8,44,33,2.2,33,2], [-.33, -7,22,74,23,23,6]);
                 }
                 if (num === 3 && this.active) {
-                    this.getLineData([0, 33], [65, 7])
+                    this.getLineData([.43, 12,56,34,67,23,56], [65, 7,23,76,34,76,23]);
                 }
                 if (num === 5 && !this.active) {
-                    this.getLineData([25, 3], [74, 7])
+                    this.getLineData([25, 3,43,22,54,23,78], [74, 7,77,34,22,4.4,2.3]);
                 }
                 if (num == 3 && !this.active) {
-                    this.getLineData([73, 3], [25, 7])
+                    this.getLineData([73, 3,76,23,88,55,2.2], [25, 7,22,89,32,4.5,34]);
                 }
             },
-            getData() {
-                let pieData = [{value: 43.22, name: 1, itemStyle: {color: '#eed955'}},
-                    {value: 31.17, name: 2, itemStyle: {color: '#da7574'}},
-                    {value: 13.55, name: 3, itemStyle: {color: '#e6b144'}},
-                    {value: 8.53, name: 4, itemStyle: {color: '#de8551'}},
-                    {value: 4.53, name: 5, itemStyle: {color: '#80b273'}},
-                    {value: 0, name: 6, itemStyle: {color: '#e2ea59'}}];
-
+            getData(pieData) {
                 this.option = {
                     tooltip: {
                         show: false,
@@ -203,7 +254,7 @@
                           console.log(resp);
                       })*/
             },
-            getLineData() {
+            getLineData(levelFive, argLongName) {
                 this.lineOption = {
                     grid: {
                         top: 10,
@@ -211,9 +262,7 @@
                     },
                     tooltip: {
                         trigger: 'axis',
-                        axisPointer:{
-                            show:true
-                        }
+                        position: ['10%', '0%']
                     },
                     legend: {
                         data: [{
@@ -259,49 +308,19 @@
                             name: '等级5',
                             type: 'line',
                             stack: '总量',
-                            data: [-.2, 0, .1, .2, .05, -.1, .01],
+                            data: levelFive,
                             symbol: 'none'
                         },
                         {
                             name: '比较基准（56%中证全债+44%上证指数）',
                             type: 'line',
                             stack: '总量',
-                            data: [.01, -.1, .05, .2, .1, 0, -.2],
+                            data: argLongName,
                             symbol: 'none'
                         }
                     ]
                 };
-
             }
-            /*   getLineData(arr1, arr2) {
-                   this.lineDatas = {
-                       labels: ['2015-06-26', '2018-06-25'],
-                       datasets: [
-                           {
-                               label: '等级5',
-                               backgroundColor: '#ef8159',
-                               data: arr1,
-                               borderColor: '#ef8159',
-                               fill: false,
-                               borderWidth: 1,
-                               pointBackgroundColor: 'transparent',
-                               pointStyle: 'circle',
-                               hitRadius: 10,
-                               radius: 0
-                           },
-                           {
-                               label: '比较基准（56%中证全债+44%上证指数）',
-                               backgroundColor: '#5b92b5',
-                               borderColor: '#5b92b5',
-                               data: arr2,
-                               fill: false,
-                               borderWidth: 1,
-                               pointBackgroundColor: 'transparent',
-                               pointStyle: 'dash'
-                           }
-                       ]
-                   };
-               },*/
         },
         mounted() {
         }
