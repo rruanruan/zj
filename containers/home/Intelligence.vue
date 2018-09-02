@@ -44,8 +44,10 @@
                     <div :class="{'active':active}" @click.stop="checkTab(1)">最大回撤</div>
                 </div>
                 <div class="line-box">
-                    <line-chart :data="lineDatas" :options="lineOptions" :chart-data="lineDatas"
-                                :height="200"></line-chart>
+                    <chart :options="lineOption" class="line-chart"></chart>
+                    <!--
+                                        <line-chart :data="lineDatas" :options="lineOptions" :chart-data="lineDatas"
+                                                    :height="200"></line-chart>-->
                 </div>
                 <div flex="box:mean" class="duration-tab">
                     <div :class="{'year-active':duration===5}" @click.stop="durationCheck(5)">近5年</div>
@@ -67,7 +69,9 @@
     import Vue from 'vue';
     import ECharts from 'vue-echarts/components/ECharts.vue';
     import 'echarts/lib/chart/pie';
+    import 'echarts/lib/chart/line';
     import 'echarts/lib/component/legend';
+    import 'echarts/lib/component/tooltip';
 
     Vue.component('chart', ECharts);
     export default {
@@ -77,45 +81,7 @@
                 option: {},
                 duration: 5,
                 active: 0,
-                lineOptions: {
-                    tooltips: {
-                        mode: 'index'
-                    },
-                    scales: {
-                        yAxes: [{
-                            stacked: true,
-                            ticks: {
-                                beginAtZero: false,
-                                callback: function (value, index, values) {
-                                    return value.toFixed(2);
-                                }
-                            },
-                            gridLines: {
-                                display: true,
-                            }
-                        }],
-                        /*  yAxes: [{
-                         id: 'left-y-axis',
-                         type: 'linear',
-                         position: 'left'
-                         }, {
-                         id: 'right-y-axis',
-                         type: 'linear',
-                         position: 'right'
-                         }],*/
-                        xAxes: [{
-                            gridLines: {
-                                display: false,
-                            }
-                        }]
-                    },
-                    legend: {
-                        display: true,
-                        position: 'bottom'
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false
-                },
+                lineOption: {}
             };
         },
         props: [],
@@ -167,6 +133,7 @@
 
                 this.option = {
                     tooltip: {
+                        show: false,
                         trigger: 'item',
                         formatter: "{a} <br/>{b}: {c} ({d}%)"
                     },
@@ -210,8 +177,8 @@
                                     formatter: function () {
                                         return '配比说明'
                                     },
-                                    color:'#73b3be',
-                                    fontSize:14
+                                    color: '#73b3be',
+                                    fontSize: 14
                                 },
                                 emphasis: {
                                     show: false,
@@ -236,35 +203,105 @@
                           console.log(resp);
                       })*/
             },
-            getLineData(arr1, arr2) {
-                this.lineDatas = {
-                    labels: ['2015-06-26', '2018-06-25'],
-                    datasets: [
+            getLineData() {
+                this.lineOption = {
+                    grid: {
+                        top: 10,
+                        bottom: 80
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer:{
+                            show:true
+                        }
+                    },
+                    legend: {
+                        data: [{
+                            name: '等级5',
+                            icon: 'line',
+                        }, {
+                            name: '比较基准（56%中证全债+44%上证指数）',
+                            icon: 'line'
+                        }],
+                        x: 'center',
+                        orient: 'vertical',
+                        bottom: 0,
+                        textStyle: {
+                            color: '#000',
+                            fontWeight: 'bold'
+                        },
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    calculable: true,
+                    xAxis: [
                         {
-                            label: '等级5',
-                            backgroundColor: '#ef8159',
-                            data: arr1,
-                            borderColor: '#ef8159',
-                            fill: false,
-                            borderWidth: 1,
-                            pointBackgroundColor: 'transparent',
-                            pointStyle: 'circle',
-                            hitRadius: 10,
-                            radius: 0
+                            type: 'category',
+                            boundaryGap: false,
+                            data: ['2015-06-25', '', '', '', '', '', '2018-06-25']
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '等级5',
+                            type: 'line',
+                            stack: '总量',
+                            data: [-.2, 0, .1, .2, .05, -.1, .01],
+                            symbol: 'none'
                         },
                         {
-                            label: '比较基准（56%中证全债+44%上证指数）',
-                            backgroundColor: '#5b92b5',
-                            borderColor: '#5b92b5',
-                            data: arr2,
-                            fill: false,
-                            borderWidth: 1,
-                            pointBackgroundColor: 'transparent',
-                            pointStyle: 'dash'
+                            name: '比较基准（56%中证全债+44%上证指数）',
+                            type: 'line',
+                            stack: '总量',
+                            data: [.01, -.1, .05, .2, .1, 0, -.2],
+                            symbol: 'none'
                         }
                     ]
                 };
-            },
+
+            }
+            /*   getLineData(arr1, arr2) {
+                   this.lineDatas = {
+                       labels: ['2015-06-26', '2018-06-25'],
+                       datasets: [
+                           {
+                               label: '等级5',
+                               backgroundColor: '#ef8159',
+                               data: arr1,
+                               borderColor: '#ef8159',
+                               fill: false,
+                               borderWidth: 1,
+                               pointBackgroundColor: 'transparent',
+                               pointStyle: 'circle',
+                               hitRadius: 10,
+                               radius: 0
+                           },
+                           {
+                               label: '比较基准（56%中证全债+44%上证指数）',
+                               backgroundColor: '#5b92b5',
+                               borderColor: '#5b92b5',
+                               data: arr2,
+                               fill: false,
+                               borderWidth: 1,
+                               pointBackgroundColor: 'transparent',
+                               pointStyle: 'dash'
+                           }
+                       ]
+                   };
+               },*/
         },
         mounted() {
         }
