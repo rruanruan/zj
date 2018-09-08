@@ -15,7 +15,7 @@
 
             </div>
             <div class="content-body hint">
-                <div flex>
+                <!--<div flex>
                     <p flex-box="1" flex="cross:center">
                         您还未购买组合，赶紧前去只能组合页面购买吧
                     </p>
@@ -23,7 +23,7 @@
                         <img src="../../images/arrow-right.png" alt="">
                     </div>
 
-                </div>
+                </div>-->
 
                 <div class="box-group" flex="box:mean">
                     <div class="box-action" flex="main:center">追加购买</div>
@@ -34,7 +34,7 @@
             </div>
 
             <div class="content-body items">
-                <div class="item" flex @click.stop="linkList">
+                <div class="item" flex @click.stop="linkTo('../comb/comb-list.html')">
                     <div flex-box="1" flex="cross:center">
                         <div class="item-icon">
                             <img src="../../images/combination/cyjj.png"/>
@@ -45,18 +45,18 @@
                         <img src="../../images/arrow-right.png" alt="">
                     </div>
                 </div>
-                <div class="item" flex>
-                    <div flex-box="1" flex="cross:center">
-                        <div class="item-icon">
-                            <img src="../../images/combination/jyjl.png"/>
-                        </div>
-                        <span>交易记录</span>
-                    </div>
+                <!--  <div class="item" flex>
+                      <div flex-box="1" flex="cross:center">
+                          <div class="item-icon">
+                              <img src="../../images/combination/jyjl.png"/>
+                          </div>
+                          <span>交易记录</span>
+                      </div>
 
-                    <div class="arrow-right" flex-box="0" flex="cross:center">
-                        <img src="../../images/arrow-right.png" alt="">
-                    </div>
-                </div>
+                      <div class="arrow-right" flex-box="0" flex="cross:center">
+                          <img src="../../images/arrow-right.png" alt="">
+                      </div>
+                  </div>-->
                 <div class="item" flex>
                     <div flex-box="1" flex="cross:center">
                         <div class="item-icon">
@@ -68,19 +68,19 @@
                         <img src="../../images/arrow-right.png" alt="">
                     </div>
                 </div>
-                <div class="item" flex>
+                <!--  <div class="item" flex>
 
-                    <div flex-box="1" flex="cross:center">
-                        <div class="item-icon">
-                            <img src="../../images/combination/dtgl.png"/>
-                        </div>
-                        <span>定投管理</span>
-                    </div>
-                    <div class="arrow-right" flex-box="0" flex="cross:center">
-                        <img src="../../images/arrow-right.png" alt="">
-                    </div>
-                </div>
-                <div class="item" flex>
+                      <div flex-box="1" flex="cross:center">
+                          <div class="item-icon">
+                              <img src="../../images/combination/dtgl.png"/>
+                          </div>
+                          <span>定投管理</span>
+                      </div>
+                      <div class="arrow-right" flex-box="0" flex="cross:center">
+                          <img src="../../images/arrow-right.png" alt="">
+                      </div>
+                  </div>-->
+                <div class="item" flex @click.stop="linkTo('../customer/list.html')">
 
                     <div flex-box="1" flex="cross:center">
                         <div class="item-icon">
@@ -115,8 +115,8 @@
         created() {
         },
         methods: {
-            linkList() {
-                window.location.href = '../comb/comb-list.html';
+            linkTo(link) {
+                window.location.href = link;
             }
         },
         mounted() {

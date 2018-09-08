@@ -2,20 +2,24 @@
     <div class="content-warp">
         <div class="comb-header" flex>
             <span flex-box="1">添加时间</span>
-            <span flex-box="0" class="rate">年化收益</span>
-            <span flex-box="0" class="max-return">最大回撤</span>
+            <span flex-box="0" class="name">策略名称</span>
+            <span flex-box="0" class="rate">年化</span>
+            <span flex-box="0" class="max-return">回撤</span>
             <span flex-box="0" class="operate">操作</span>
         </div>
         <div class="comb-list">
             <div class="comb-item" v-for="(item,index) in list"
                  @click.stop="linkDetail(item)"
-                 flex="box:mean" :key="index">
+                 flex
+                  :key="index">
                 <span flex-box="1">{{item.time}}</span>
+                <span flex-box="0" class="name">{{index%2===1?'趋势策略':'AI策略'}}</span>
                 <span flex-box="0" class="rate">{{item.rate}}%</span>
                 <span flex-box="0" class="max-return">{{item.maxReturn}}%</span>
 
-                <div flex-box="0" class="operate" @click.stop="removeItem(index)">
-                    <button class="btn-default btn-delete">删除</button>
+                <div flex="box:mean" flex-box="0" class="operate">
+                    <button class="btn-default btn-adjust" @click.stop="adjust(index)">调仓</button>
+                    <button class="btn-default btn-delete" @click.stop="removeItem(index)">删除</button>
                 </div>
             </div>
         </div>
@@ -137,6 +141,9 @@
                         Toast('删除成功');
                     }
                 });
+            },
+            adjust() {
+                Toast('调仓成功');
             },
             linkDetail(item) {
                 console.log(item);

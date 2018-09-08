@@ -3,6 +3,10 @@
         <div class="intelligence" style="padding-bottom: 0">
 
             <div class="content">
+                <div class="title" flex="box:mean">
+                    <span class="high-light" style="text-align: center;margin-left: 2rem">趋势策略</span>
+                    <span  style="margin-left: 2rem">2018.12.12</span>
+                </div>
                 <div class="doughnut-box">
                     <chart :options="option"></chart>
 
