@@ -53,8 +53,8 @@
             .modal-content {
                 color: #666;
                 font-size: .7rem;
-                padding: .5rem;
-                line-height: 1rem;
+                padding: .5rem 1rem 1rem;
+                line-height: 1.2rem;
             }
         }
     }
