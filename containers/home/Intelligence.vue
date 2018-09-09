@@ -20,8 +20,11 @@
                 </div>
             </div>
             <div class="content">
-                <div class="title" v-if="type===1">
-                    本周推荐：<span class="high-light">趋势策略</span>
+                <div class="title" >
+                    <div v-if="type===1">本周推荐：<span class="high-light">趋势策略</span></div>
+                    <div v-if="type===2" class="high-light">回转交易策略</div>
+                    <div v-if="type===3" class="high-light">AI策略</div>
+                    <div v-if="type===4" class="high-light">自定义策略</div>
                 </div>
                 <div class="doughnut-box">
                     <chart :options="option"></chart>
@@ -255,10 +258,6 @@
                         }
                     ]
                 };
-                /*  http.get('/smartinfo/list',{smartType:3})
-                      .then(resp=>{
-                          console.log(resp);
-                      })*/
             },
             getLineData(levelFive, argLongName) {
                 this.lineOption = {

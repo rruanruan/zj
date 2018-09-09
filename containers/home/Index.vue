@@ -28,92 +28,92 @@
     import ECharts from 'vue-echarts/components/ECharts.vue';
     import '../../less/home/index.less';
     import Tabs from '../../components/Tabs';
-    import IndexBar from '../../tools/bar';
     import http from '../../utils/http';
     import 'echarts/lib/chart/bar';
     import 'echarts/lib/component/tooltip';
+
     Vue.component('chart', ECharts);
 
     export default {
         name: 'Index',
         data() {
             return {
-                option:{}
+                option: {}
             };
         },
         props: [],
-        components: {Tabs, IndexBar,chart: ECharts},
+        components: {Tabs, chart: ECharts},
         computed: {},
         created() {
             this.getData();
         },
         methods: {
             getData() {
-                let labelRight = {position:'left'};
-                     this.option = {
-                         tooltip : {
-                             trigger: 'axis',
-                             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                                 type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                             }
-                         },
-                         xAxis : [
-                             {
-                                 type : 'value',
-                                 position: 'top',
-                                 splitLine: {lineStyle:{type:'dashed'}},
-                                 axisLabel:{color:'#fff'}
-                             }
-                         ],
-                         yAxis : [
-                             {
-                                 type : 'category',
-                                 axisLine: {show: false},
-                                 axisLabel: {show: false},
-                                 axisTick: {show: false},
-                                 splitLine: {show: false},
-                                 data: ['电子元器件', '计算机', '通信', '电力设备', '有色金属', '非银行金融', '国防军工', '传媒', '机械', '综合', '建材', '轻工制造', '家电', '食品饮料', '纺织服装', '基础化工', '餐饮旅游', '钢铁', '石油石化', '农林牧渔', '银行', '商贸零售', '建筑', '汽车', '电力及公用事业', '煤炭', '交通运输','医药'],
+                let labelRight = {position: 'left'};
+                let industryNameList = [];
+                let industryNumberList = [];
+                http.get('/smartinfo/list', {smartType: 3})
+                    .then(resp => {
 
-                             }
-                         ],
-                         series : [
-                             {
-                                 type:'bar',
-                                 itemStyle : { normal: {
-                                         color: '#be3c2d',
-                                         borderRadius: 5,
-                                         label : {
-                                             show: true,
-                                             position: 'insideRight',
-                                             formatter: '{b}',
-                                             color:'#FFF'
-                                         }
-                                     }},
-                                 data:[
-                                     {value:.2,label:labelRight},
-                                     {value:.18,label:labelRight},
-                                     {value:.14,label:labelRight},
-                                     {value:.12,label:labelRight},
-                                     {value:.07,label:labelRight},
-                                     {value:.06,label:labelRight},
-                                     {value:.05,label:labelRight},
-                                     {value:.04,label:labelRight},
-                                     {value:.03,label:labelRight},
-                                     {value:.03,label:labelRight},
-                                     {value:.03,label:labelRight},
-                                     {value:.005,label:labelRight},
-                                     {value:0,label:labelRight},
-                                     {value:0,label:labelRight},
-                                     -.01,-.02,-.04,-.05,-.06,-.07,-.08,-.085,-.085,-.09,-.1,-.12,-.13,
-                                     -.14
-                                 ]
-                             }
-                         ]
-                     };
+                        resp.map(item=>{
+                            industryNameList.push(item.industryName);
+                            if(item.industryNumber>0){
+                                industryNumberList.push({value:item.industryNumber,label: labelRight});
+                            }else{
+                                industryNumberList.push(item.industryNumber);
+                            }
+                        });
+                        this.option = {
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                                }
+                            },
+                            xAxis: [
+                                {
+                                    type: 'value',
+                                    position: 'top',
+                                    splitLine: {lineStyle: {type: 'dashed'}},
+                                    axisLabel: {color: '#fff'}
+                                }
+                            ],
+                            yAxis: [
+                                {
+                                    type: 'category',
+                                    axisLine: {show: false},
+                                    axisLabel: {show: false},
+                                    axisTick: {show: false,},
+                                    splitLine: {show: false},
+                                    data: industryNameList,
+                                    inverse:true,
+                                }
+                            ],
+                            series: [
+                                {
+                                    type: 'bar',
+                                    itemStyle: {
+                                        normal: {
+                                            color: '#be3c2d',
+                                            borderRadius: 5,
+                                            label: {
+                                                show: true,
+                                                position: 'insideRight',
+                                                formatter: '{b}',
+                                                color: '#FFF'
+                                            }
+                                        }
+                                    },
+                                    data: industryNumberList
+                                }
+                            ]
+                        };
+                    })
+
             }
         },
         mounted() {
-          //  http.get('/smartinfo/list', {smartType: 3})
+            //  http.get('/smartinfo/list', {smartType: 3})
         }
     }
 </script>
