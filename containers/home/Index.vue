@@ -56,7 +56,7 @@
                 let industryNumberList = [];
                 http.get('/smartinfo/list')
                     .then(resp => {
-
+                        resp = resp.data;
                         resp.map(item => {
                             if (item.smartType === 3) {
                                 industryNameList.push(item.industryName);
@@ -66,11 +66,11 @@
                                     industryNumberList.push(item.industryNumber);
                                 }
                             }
-                            if(item.smartType === 2){
+                            if (item.smartType === 2) {
                                 this.marketView = item.marketView;
                             }
-                            if(item.smartType === 1){
-                                this.spaceNumber = item.spaceNumber*100+'%';
+                            if (item.smartType === 1) {
+                                this.spaceNumber = item.spaceNumber * 100 + '%';
                             }
 
                         });

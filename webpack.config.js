@@ -1,17 +1,15 @@
 const path = require('path');
-const os = require('os');
 const webpack = require('webpack');
-const HappyPack = require('happypack');
-const happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const happyPlugins = require('./happPackPlugins');
 let resolve = (dir) => {
     return path.join(__dirname, '..', dir)
-}
+};
 const config = {
     mode: 'development',
     entry: {
+        'polyfill': 'babel-polyfill',
         'libs': ['vue', 'flex.css'],
         'utils': ['axios', 'query-string', 'js-cookie'],
 
@@ -161,6 +159,11 @@ const config = {
             automaticNameDelimiter: '~',
             name: true,
             cacheGroups: {
+                polyfill: {
+                    test: 'polyfill',
+                    name: "polyfill",
+                    chunks: 'initial'
+                },
                 libs: {
                     test: 'libs',
                     name: "libs",
@@ -196,7 +199,7 @@ module.exports = (env = 'dev') => {
             title: file.title || '智能量化',
             env,
             favicon: path.resolve(__dirname, './images/logo.png'),
-            chunks: ['libs', 'utils', entryJS],
+            chunks: ['polyfill', 'libs', 'utils', entryJS],
             chunksSortMode: 'manual',
             inject: 'body',
             filename: path.resolve(__dirname, `${output.path}/${entryJS}.html`),

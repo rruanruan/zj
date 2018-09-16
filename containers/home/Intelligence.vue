@@ -128,17 +128,17 @@
 
         },
         methods: {
-            addCombination() {
+            async addCombination() {
 
                 let {strategyUuid} = this.currentStage;
                 let data = {
                     userUuid: '0000',
                     strategyUuid
                 };
-                return http.post('/investment/strategy/create', data)
-                    .then(() => {
-                        Toast('已添加到我的组合');
-                    });
+                let res = await http.post('/investment/strategy/create', data);
+                if (res.code === 200) {
+                    Toast('已添加到我的组合');
+                }
             },
             checkType(num) {
                 this.type = num;
@@ -340,13 +340,13 @@
                     ]
                 };
             },
-            getStrategy() {
-                return http.get('/smartinfo/strategy/list')
-                    .then(data => {
-                        console.log(data);
-                        this.strategys = data;
-                        this.checkType(this.type);
-                    });
+            async getStrategy() {
+                let res = await http.get('/smartinfo/strategy/list');
+                if (res.code === 200) {
+                    this.strategys = res.data;
+                    this.checkType(this.type);
+                }
+
             }
         },
         mounted() {

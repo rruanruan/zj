@@ -1,24 +1,23 @@
 {
     "presets": [
         [
-            "stage-3"
+            "stage-0"
         ],
         [
-            "es2015",
+            "env",
             {
                 "modules": false
             }
         ]
     ],
     "plugins": [
+        "syntax-async-functions",
         [
             "component",
-
             {
                 "libraryName": "mint-ui",
                 "style": true
             }
-
         ]
     ]
 }

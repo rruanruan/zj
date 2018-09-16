@@ -63,26 +63,34 @@
                 }
                 return '趋势策略';
             },
-            getList() {
-                return http.get('/investment/strategy/list', {userUuid: '0000'})
-                    .then(data => {
-                        console.log(data);
-                        this.list = data;
-                    });
+            async getList() {
+                let res = await http.get('/investment/strategy/list', {userUuid: '0000'});
+                if (res.code === 200) {
+                    this.list = res.data;
+                }
+
             },
-            removeItem(index) {
-                return MessageBox({
+            async removeItem(index) {
+                let action = await MessageBox({
                     title: '提示',
                     message: '确定删除该组合?',
                     confirmButtonText: '删除',
                     showCancelButton: true
-                }).then(action => {
-                    console.log(action);
-                    if (action === 'confirm') {
-                        this.list.splice(index, 1);
-                        Toast('删除成功');
-                    }
                 });
+                if (action === 'confirm') {
+                    let res = await   this.deleteItem(index);
+                    if (res.code === 200) {
+                        this.list.splice(index, 1);
+                    }
+                }
+
+            },
+            deleteItem(index) {
+                let item = this.list[index];
+                let userUuid = '0000';
+                let {strategyUuid} = item;
+                return http.post('/investment/strategy/edit', {userUuid, strategyUuid})
+
             },
             adjust() {
                 Toast('调仓成功');

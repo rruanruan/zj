@@ -22,15 +22,15 @@ function get(path, data = {}) {
             return response.data;
         }
 
-        return Promise.reject({
+        return Promise.resolve({
             msg: 'error',
             code: -1
         });
     }).then(data => {
         if (data.code === 200) {
-            return data.data;
+            return data;
         }
-        return Promise.reject(data);
+        return Promise.resolve(data);
     });
 }
 
@@ -40,6 +40,8 @@ function get(path, data = {}) {
 * return: 返回promise
 * desc：发送post请求
 * */
+import {Toast} from 'mint-ui';
+
 function post(path, data = {}) {
 
     return axios({
@@ -52,15 +54,16 @@ function post(path, data = {}) {
             return response.data;
         }
 
-          return Promise.reject({
+        return Promise.resolve({
             msg: 'error',
             code: -1
         });
     }).then(data => {
         if (data.code === 200) {
-            return data.data;
+            return data;
         }
-        return Promise.reject(data);
+        Toast(data.msg);
+        return Promise.resolve(data);
     })
 }
 
