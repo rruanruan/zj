@@ -3,11 +3,11 @@
         <div class="index">
             <div class="content">
                 <p class="title">大盘看法</p>
-                <p class="info">市场震荡向下，以防守为主，注意前低2638附近的支撑</p>
+                <p class="info">{{marketView}}</p>
             </div>
             <div class="content">
                 <p class="title">仓位建议</p>
-                <p class="info-highlight">60%</p>
+                <p class="info-highlight">{{spaceNumber}}</p>
             </div>
             <div class="content">
                 <p class="title">行业看法</p>
@@ -38,7 +38,9 @@
         name: 'Index',
         data() {
             return {
-                option: {}
+                option: {},
+                spaceNumber: '0%',
+                marketView: ''
             };
         },
         props: [],
@@ -52,16 +54,25 @@
                 let labelRight = {position: 'left'};
                 let industryNameList = [];
                 let industryNumberList = [];
-                http.get('/smartinfo/list', {smartType: 3})
+                http.get('/smartinfo/list')
                     .then(resp => {
 
-                        resp.map(item=>{
-                            industryNameList.push(item.industryName);
-                            if(item.industryNumber>0){
-                                industryNumberList.push({value:item.industryNumber,label: labelRight});
-                            }else{
-                                industryNumberList.push(item.industryNumber);
+                        resp.map(item => {
+                            if (item.smartType === 3) {
+                                industryNameList.push(item.industryName);
+                                if (item.industryNumber > 0) {
+                                    industryNumberList.push({value: item.industryNumber, label: labelRight});
+                                } else {
+                                    industryNumberList.push(item.industryNumber);
+                                }
                             }
+                            if(item.smartType === 2){
+                                this.marketView = item.marketView;
+                            }
+                            if(item.smartType === 1){
+                                this.spaceNumber = item.spaceNumber*100+'%';
+                            }
+
                         });
                         this.option = {
                             tooltip: {
@@ -86,7 +97,7 @@
                                     axisTick: {show: false,},
                                     splitLine: {show: false},
                                     data: industryNameList,
-                                    inverse:true,
+                                    inverse: true,
                                 }
                             ],
                             series: [
