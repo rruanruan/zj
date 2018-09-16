@@ -23,6 +23,9 @@
                 </div>
             </div>
         </div>
+
+        <Picker :list="stageOpt.list" :title="stageOpt.title" @back="stageOpt.callback"
+                v-if="stageOpt.show"></Picker>
     </div>
 
 </template>
@@ -32,16 +35,33 @@
     import http from '../../utils/http';
     import dateFormat from '../../utils/date-format';
     import {MessageBox, Toast} from 'mint-ui';
+    import Picker from '../../components/Picker';
 
     export default {
         name: 'CombList',
         data() {
             return {
-                list: []
+                list: [],
+                strategys: [],
+                currentStage: {},
+                stageOpt: {
+                    show: false,
+                    list: [],
+                    title: '选择策略',
+                    callback: (res) => {
+                        console.log(res);
+                        if (!res) {
+                            return false;
+                        }
+                        this.stageOpt.show = false;
+                        this.adjustBack(res);
+                    }
+                }
+
             };
         },
         props: [],
-        components: {},
+        components: {Picker},
         computed: {},
         created() {
             this.getList();
@@ -80,6 +100,7 @@
                 if (action === 'confirm') {
                     let res = await   this.deleteItem(index);
                     if (res.code === 200) {
+                        Toast('删除成功');
                         this.list.splice(index, 1);
                     }
                 }
@@ -92,16 +113,54 @@
                 return http.post('/investment/strategy/edit', {userUuid, strategyUuid})
 
             },
-            adjust() {
-                Toast('调仓成功');
+            adjust(index) {
+                this.currentStage = this.list[index];
+
+                this.stageOpt.show = true;
+            },
+            async adjustBack(strategyName) {
+                if (strategyName === this.currentStage.strategyName) {
+                    return false;
+                }
+                let target = {};
+                this.strategys.map(stage => {
+                    if (stage.strategyName === strategyName) {
+                        target = stage;
+                    }
+                });
+                let oldStrategyUuid = this.currentStage.strategyUuid;
+                let newStrategyUuid = target.strategyUuid;
+                let data = {
+                    userUuid: '0000',
+                    oldStrategyUuid,
+                    newStrategyUuid
+                };
+
+                let res = await http.post('/investment/strategy/trans', data);
+                if (res.code === 200) {
+                    Toast('调仓成功');
+                }
+
             },
             linkDetail(item) {
                 console.log(item);
                 window.sessionStorage.setItem('comb-detail', JSON.stringify(item));
                 window.location.href = './comb-detail.html';
+            },
+            async getStrategy() {
+                let res = await http.get('/smartinfo/strategy/list');
+                if (res.code === 200) {
+                    this.strategys = res.data;
+                    this.strategys.map(stage => {
+                        this.stageOpt.list.push(stage.strategyName);
+                    });
+
+                }
+
             }
         },
         mounted() {
+            this.getStrategy();
         }
     }
 </script>

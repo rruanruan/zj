@@ -1,0 +1,38 @@
+@charset "UTF-8";
+.kingold-picker {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 10;
+    .shadow-warp {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .36);
+    }
+    .picker-warp {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background-color: #fff;
+        transform: translateY(100%);
+        transition: all .5s ease;
+        &.enter {
+            transform: translateY(0%);
+        }
+        .picker-header {
+            background-color: #eee;
+            color: #666;
+            border-bottom: 1px solid #ddd;
+            font-size: .8rem;
+            span {
+                padding: .5rem .8rem;
+            }
+            .positive {
+                color: #0084FF;
+            }
+        }
+
+    }
+}
