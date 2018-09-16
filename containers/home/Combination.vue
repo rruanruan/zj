@@ -14,7 +14,7 @@
                 </div>
 
             </div>
-            <div class="content-body hint">
+            <div class="content-body hint" v-if="false">
                 <!--<div flex>
                     <p flex-box="1" flex="cross:center">
                         您还未购买组合，赶紧前去只能组合页面购买吧

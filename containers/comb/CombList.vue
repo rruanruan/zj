@@ -11,11 +11,11 @@
             <div class="comb-item" v-for="(item,index) in list"
                  @click.stop="linkDetail(item)"
                  flex
-                  :key="index">
-                <span flex-box="1">{{item.time}}</span>
-                <span flex-box="0" class="name">{{index%2===1?'趋势策略':'AI策略'}}</span>
-                <span flex-box="0" class="rate">{{item.rate}}%</span>
-                <span flex-box="0" class="max-return">{{item.maxReturn}}%</span>
+                 :key="index">
+                <span flex-box="1">{{dateFormat(item.createTime,'yyyy-MM-dd')}}</span>
+                <span flex-box="0" class="name">{{getName(item.strategyType)}}</span>
+                <span flex-box="0" class="rate">{{item.annualInterestRate}}%</span>
+                <span flex-box="0" class="max-return">{{item.expectMaxRetreat}}%</span>
 
                 <div flex="box:mean" flex-box="0" class="operate">
                     <button class="btn-default btn-adjust" @click.stop="adjust(index)">调仓</button>
@@ -29,105 +29,47 @@
 
 <script>
     import '../../less/comb/comb-list.less';
+    import http from '../../utils/http';
+    import dateFormat from '../../utils/date-format';
     import {MessageBox, Toast} from 'mint-ui';
 
     export default {
         name: 'CombList',
         data() {
             return {
-                list: [{
-                    time: '2018.7.12',
-                    rate: '8',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.13',
-                    rate: '9',
-                    maxReturn: '7'
-                }, {
-                    time: '2018.7.13',
-                    rate: '9',
-                    maxReturn: '7'
-                }, {
-                    time: '2018.7.13',
-                    rate: '9',
-                    maxReturn: '7'
-                }, {
-                    time: '2018.7.13',
-                    rate: '9',
-                    maxReturn: '7'
-                }, {
-                    time: '2018.7.13',
-                    rate: '9',
-                    maxReturn: '7'
-                }, {
-                    time: '2018.7.13',
-                    rate: '9',
-                    maxReturn: '7'
-                }, {
-                    time: '2018.7.13',
-                    rate: '9',
-                    maxReturn: '7'
-                }, {
-                    time: '2018.7.13',
-                    rate: '9',
-                    maxReturn: '7'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }, {
-                    time: '2018.7.14',
-                    rate: '10',
-                    maxReturn: '9'
-                }]
+                list: []
             };
         },
         props: [],
         components: {},
         computed: {},
         created() {
+            this.getList();
         },
         methods: {
+            dateFormat(time, format) {
+                let date = new Date(time);
+                return dateFormat.format(date, format);
+            },
+            getName(type) {
+                if (type === 2) {
+                    return '回转交易策略'
+                }
+                if (type === 3) {
+                    return 'AI策略'
+                }
+                if (type === 4) {
+                    return '自定义策略'
+                }
+                return '趋势策略';
+            },
+            getList() {
+                return http.get('/investment/strategy/list', {userUuid: '0000'})
+                    .then(data => {
+                        console.log(data);
+                        this.list = data;
+                    });
+            },
             removeItem(index) {
                 return MessageBox({
                     title: '提示',
@@ -147,6 +89,7 @@
             },
             linkDetail(item) {
                 console.log(item);
+                window.sessionStorage.setItem('comb-detail', JSON.stringify(item));
                 window.location.href = './comb-detail.html';
             }
         },

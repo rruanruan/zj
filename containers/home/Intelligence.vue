@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="content">
-                <div class="title" >
+                <div class="title">
                     <div v-if="type===1">本周推荐：<span class="high-light">趋势策略</span></div>
                     <div v-if="type===2" class="high-light">回转交易策略</div>
                     <div v-if="type===3" class="high-light">AI策略</div>
@@ -88,110 +88,139 @@
                 duration: 5,
                 active: 0,
                 lineOption: {},
-                type: 1,
+                type: 1,//默认显示趋势策略
+                strategys: [], //策略,
+                pieOpt: {
+                    itemStyles: [{
+                        color: '#eed955'
+                    }, {
+                        color: '#da7574'
+                    }, {
+                        color: '#e6b144'
+                    }, {
+                        color: '#de8551'
+                    }, {
+                        color: '#80b273'
+                    }, {
+                        color: '#e2ea59'
+                    }]
+                },
+                pieData: [],
                 rate: '10.63%',
                 maxReback: '66.03%'
             };
         },
         props: [],
         components: {Tabs},
-        computed: {},
+        computed: {
+            // 当前策略
+            currentStage() {
+                for (let i = 0; i < this.strategys.length; i++) {
+                    let strategy = this.strategys[i];
+                    if (strategy.strategyType === this.type) {
+                        return strategy;
+                    }
+                }
+                return {};
+            }
+        },
         created() {
-            this.checkType(this.type);
+
         },
         methods: {
-            addCombination(){
-                Toast('已添加到我的组合');
+            addCombination() {
+
+                let {strategyUuid} = this.currentStage;
+                let data = {
+                    userUuid: '0000',
+                    strategyUuid
+                };
+                return http.post('/investment/strategy/create', data)
+                    .then(() => {
+                        Toast('已添加到我的组合');
+                    });
             },
             checkType(num) {
                 this.type = num;
+                let {currentStage, pieOpt} = this;
                 let pieData = [];
                 let levelFive = [];
                 let argLongName = [];
+                console.log(currentStage);
+
+                (currentStage.strategyAssignment || []).map((strate, index) => {
+                    pieData.push({
+                        value: strate.percentage,
+                        name: strate.ratioName + (strate.percentage * 100).toFixed(2) + '%',
+                        itemStyle: pieOpt.itemStyles[index],
+                        icon: 'circle'
+                    })
+                });
+
                 if (num === 1) {
-                    pieData = [{value: 43.22, name: 1, itemStyle: {color: '#eed955'}},
-                        {value: 31.17, name: 2, itemStyle: {color: '#da7574'}},
-                        {value: 13.55, name: 3, itemStyle: {color: '#e6b144'}},
-                        {value: 8.53, name: 4, itemStyle: {color: '#de8551'}},
-                        {value: 4.53, name: 5, itemStyle: {color: '#80b273'}},
-                        {value: 0, name: 6, itemStyle: {color: '#e2ea59'}}];
                     this.rate = '63.34%';
                     this.maxReback = '0.03%';
                     levelFive = [-.2, 0, .1, .2, .05, -.1, .01];
                     argLongName = [.01, -.1, .05, .2, .1, 0, -.2];
                 }
                 if (num === 2) {
-                    pieData = [{value: 13.22, name: 1, itemStyle: {color: '#eed955'}},
-                        {value: 10.17, name: 2, itemStyle: {color: '#da7574'}},
-                        {value: 43.55, name: 3, itemStyle: {color: '#e6b144'}},
-                        {value: 33.53, name: 4, itemStyle: {color: '#de8551'}},
-                        {value: 2.53, name: 5, itemStyle: {color: '#80b273'}},
-                        {value: 1, name: 6, itemStyle: {color: '#e2ea59'}}];
+
                     this.rate = '2.22%';
                     this.maxReback = '1.11%';
                     levelFive = [77.2, 3, 22, 2, 66, -11, .01];
                     argLongName = [4.01, .1, 5.05, 2.2, 77.1, 40, 3.2];
                 }
                 if (num === 3) {
-                    pieData = [{value: 2.22, name: 1, itemStyle: {color: '#eed955'}},
-                        {value: 71.17, name: 2, itemStyle: {color: '#da7574'}},
-                        {value: 3.55, name: 3, itemStyle: {color: '#e6b144'}},
-                        {value: 45.53, name: 4, itemStyle: {color: '#de8551'}},
-                        {value: 2.53, name: 5, itemStyle: {color: '#80b273'}},
-                        {value: 5, name: 6, itemStyle: {color: '#e2ea59'}}];
+
                     this.rate = '99.11%';
                     this.maxReback = '44.47%';
                     levelFive = [34.2, 30, 4.1, 5.2, 32.05, 11.1, 21];
                     argLongName = [55, 2, .05, 22, 3, 44, .77];
                 }
                 if (num === 4) {
-                    pieData = [{value: 80.22, name: 1, itemStyle: {color: '#eed955'}},
-                        {value: 1.17, name: 2, itemStyle: {color: '#da7574'}},
-                        {value: 1.55, name: 3, itemStyle: {color: '#e6b144'}},
-                        {value: 0.53, name: 4, itemStyle: {color: '#de8551'}},
-                        {value: 6.53, name: 5, itemStyle: {color: '#80b273'}},
-                        {value: 0, name: 6, itemStyle: {color: '#e2ea59'}}];
+
                     this.rate = '60.34%';
                     this.maxReback = '13.95%';
                     levelFive = [-33.2, 11, .2, 3.54, 1.05, 44.1, 1.01];
                     argLongName = [-.01, .1, -.05, 2.2, 45.1, 0, 22.2];
                 }
 
-                this.getData(pieData);
+                this.getPieData(pieData);
                 this.getLineData(levelFive, argLongName);
             },
             checkTab(num) {
                 this.active = num;
                 if (num && this.duration === 5) {
-                    this.getLineData([67, 8,44,33,2.2,33,2], [-.33, -7,22,74,23,23,6]);
+                    this.getLineData([67, 8, 44, 33, 2.2, 33, 2], [-.33, -7, 22, 74, 23, 23, 6]);
                 }
                 if (num && this.duration === 3) {
-                    this.getLineData([.43, 12,56,34,67,23,56], [65, 7,23,76,34,76,23]);
+                    this.getLineData([.43, 12, 56, 34, 67, 23, 56], [65, 7, 23, 76, 34, 76, 23]);
                 }
                 if (this.duration === 5 && !num) {
-                    this.getLineData([25, 3,43,22,54,23,78], [74, 7,77,34,22,4.4,2.3]);
+                    this.getLineData([25, 3, 43, 22, 54, 23, 78], [74, 7, 77, 34, 22, 4.4, 2.3]);
                 }
                 if (this.duration === 3 && !num) {
-                    this.getLineData([73, 3,76,23,88,55,2.2], [25, 7,22,89,32,4.5,34]);
+                    this.getLineData([73, 3, 76, 23, 88, 55, 2.2], [25, 7, 22, 89, 32, 4.5, 34]);
                 }
 
             },
             durationCheck(num) {
                 this.duration = num;
                 if (num === 5 && this.active) {
-                    this.getLineData([67, 8,44,33,2.2,33,2], [-.33, -7,22,74,23,23,6]);
+                    this.getLineData([67, 8, 44, 33, 2.2, 33, 2], [-.33, -7, 22, 74, 23, 23, 6]);
                 }
                 if (num === 3 && this.active) {
-                    this.getLineData([.43, 12,56,34,67,23,56], [65, 7,23,76,34,76,23]);
+                    this.getLineData([.43, 12, 56, 34, 67, 23, 56], [65, 7, 23, 76, 34, 76, 23]);
                 }
                 if (num === 5 && !this.active) {
-                    this.getLineData([25, 3,43,22,54,23,78], [74, 7,77,34,22,4.4,2.3]);
+                    this.getLineData([25, 3, 43, 22, 54, 23, 78], [74, 7, 77, 34, 22, 4.4, 2.3]);
                 }
                 if (num == 3 && !this.active) {
-                    this.getLineData([73, 3,76,23,88,55,2.2], [25, 7,22,89,32,4.5,34]);
+                    this.getLineData([73, 3, 76, 23, 88, 55, 2.2], [25, 7, 22, 89, 32, 4.5, 34]);
                 }
             },
-            getData(pieData) {
+            getPieData(pieData) {
+                console.log(pieData);
                 this.option = {
                     tooltip: {
                         show: false,
@@ -203,26 +232,11 @@
                         x: 'right',
                         y: 'center',
                         formatter: function (name) {
-                            if (name === 1)
-                                return '香港股票' + pieData[name - 1].value + '%';
-                            if (name === 2)
-                                return '大盘股票' + pieData[name - 1].value + '%';
-                            if (name === 3)
-                                return '美国股票' + pieData[name - 1].value + '%';
-                            if (name === 4)
-                                return '小盘股票' + pieData[name - 1].value + '%';
-                            if (name === 5)
-                                return '黄金' + pieData[name - 1].value + '%';
-                            if (name === 6)
-                                return '其他' + pieData[name - 1].value + '%';
+                            console.log(name);
+                            return name;
                         },
                         align: 'left',
-                        data: [{name: 1, icon: 'circle'},
-                            {name: 2, icon: 'circle'},
-                            {name: 3, icon: 'circle'},
-                            {name: 4, icon: 'circle'},
-                            {name: 5, icon: 'circle'},
-                            {name: 6, icon: 'circle'}]
+                        data: pieData
                     },
                     series: [
                         {
@@ -325,9 +339,18 @@
                         }
                     ]
                 };
+            },
+            getStrategy() {
+                return http.get('/smartinfo/strategy/list')
+                    .then(data => {
+                        console.log(data);
+                        this.strategys = data;
+                        this.checkType(this.type);
+                    });
             }
         },
         mounted() {
+            this.getStrategy();
         }
     }
 </script>
