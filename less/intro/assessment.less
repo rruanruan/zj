@@ -1,0 +1,77 @@
+@charset "UTF-8";
+@import "../variables";
+.assessment{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    .content{
+        position: relative;
+        overflow: hidden;
+        margin: .8rem;
+        padding: 1rem .75rem;
+        background-color: #fff;
+        border-radius: .3rem;
+
+        .title{
+            text-align: center;
+         //   color: @color-text;
+            font-size: .9rem;
+        }
+        .qu-title{
+            color: @color-text;
+            font-size: .8rem;
+            padding: .8rem 0;
+        }
+        .qu-item{
+          //  border: 1px solid @color-split;
+            border-radius: 5rem;
+            color: @color-text;
+            font-size: .7rem;
+            padding: .5rem 1rem;
+            margin-bottom: .5rem;
+            &.active{
+                background-color: #1a478e;
+                border: 1px solid #1a478e;
+                color: #fff;
+                &.app{
+                    background-color: #fff;
+                    color: @color-text;
+                    border: 1px solid #7C4F2B;
+                }
+            }
+        }
+        .last-item{
+            background-color: #1a478e;
+            border-radius: 4px;
+            margin: 1rem auto;
+            color: #fff;
+            font-size: .7rem;
+            padding: .4rem 0;
+            width: 4rem;
+            text-align: center;
+            &.app{
+                background: #6E3018;
+            }
+
+        }
+    }
+    .submit{
+        text-align: center;
+        margin-top: 2rem;
+        .btn-submit{
+            background: #1a478e;
+            height: 2rem;
+            color: #fff;
+            width: 15rem;
+            margin: auto;
+            &:disabled{
+                color: #999;
+                background-image: linear-gradient(-1deg, #B1B1B1 0%, #B7B7B7 24%, #E9E9E9 70%, #EEEDED 100%)!important;
+            }
+            &.app{
+                box-shadow: none;
+                background-image: linear-gradient(-1deg, #7C4F2B 0%, #8F6441 24%, #D8BD7E 70%, #EECE83 100%);
+            }
+        }
+    }
+}
