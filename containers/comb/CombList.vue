@@ -50,10 +50,11 @@
                     title: '选择策略',
                     callback: (res) => {
                         console.log(res);
+
+                        this.stageOpt.show = false;
                         if (!res) {
                             return false;
                         }
-                        this.stageOpt.show = false;
                         this.adjustBack(res);
                     }
                 }
