@@ -120,12 +120,12 @@ export default {
         },
         createSentryError() {
             let array = [1, 2, 3];
-            http.get('/smartinfo/list-1', { smartType: 3 });
-            array[3].toString();
+            let three = array[3];
+            three.toString();
         }
     },
     mounted() {
-
+        throw new Error('sentry error');
     }
 };
 </script>
