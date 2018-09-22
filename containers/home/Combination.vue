@@ -125,7 +125,8 @@ export default {
         }
     },
     mounted() {
-        throw new Error('sentry error');
+        let array = [1, 2, 3];
+        array[3][3] = 4;
     }
 };
 </script>
