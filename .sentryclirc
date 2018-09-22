@@ -1,0 +1,9 @@
+
+
+[defaults]
+url = https://sentry.io/
+org = 29bc563d7259
+project = vue
+
+[auth]
+token = 3c0b450161cf4e9e87f03f69b0761f3296c7ea73c0214f42ac8a6a378b482371

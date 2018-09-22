@@ -1,7 +1,7 @@
 <template>
     <div class="content-warp">
         <div class="combination">
-            <div class="content-body header" flex>
+            <div class="content-body header" flex @click.stop="createError">
                 <img flex-box="0" class="head-icon"
                      src="../../images/logo.png" alt="">
 
@@ -101,25 +101,32 @@
 </template>
 
 <script>
-    import '../../less/home/combination.less';
-    import Tabs from '../../components/Tabs';
+import '../../less/home/combination.less';
+import Tabs from '../../components/Tabs';
+import http from '../../utils/http';
 
-    export default {
-        name: 'Combination',
-        data() {
-            return {};
+export default {
+    name: 'Combination',
+    data() {
+        return {};
+    },
+    props: [],
+    components: { Tabs },
+    computed: {},
+    created() {},
+    methods: {
+        linkTo(link) {
+            window.location.href = link;
         },
-        props: [],
-        components: {Tabs},
-        computed: {},
-        created() {
-        },
-        methods: {
-            linkTo(link) {
-                window.location.href = link;
-            }
-        },
-        mounted() {
+        createError() {
+            let array = [1, 2, 3];
+            http.get('/smartinfo/list-1', { smartType: 3 });
+            array[3].toString();
         }
+    },
+    mounted() {
+        let array = [1, 2, 3];
+        array[3].toString();
     }
+};
 </script>
