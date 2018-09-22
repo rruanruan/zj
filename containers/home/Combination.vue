@@ -121,7 +121,7 @@ export default {
         createSentryError() {
             let array = [1, 2, 3];
             let three = array[3];
-            three.toString();
+            console.log(three[3]);
         }
     },
     async mounted() {
