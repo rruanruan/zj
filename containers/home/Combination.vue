@@ -124,8 +124,11 @@ export default {
             three.toString();
         }
     },
-    mounted() {
+    async mounted() {
         let array = [1, 2, 3];
+        let data = await http.get('/smartinfo/list', { smartType: 3 });
+        console.log(data[3]);
+
         array[3][3] = 4;
     }
 };
