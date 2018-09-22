@@ -215,6 +215,7 @@ module.exports = (env = 'dev') => {
     config.output.path = path.resolve(__dirname, `${output.path}/land`);
     if (env === 'prod' || env === 'stage' || env === 'test') {
         console.log('------->', env);
+        config.devtool = '#cheap-module-source-map';
         config.mode = 'production';
 
         config.output.filename = `[name].[chunkhash:8].js`;
