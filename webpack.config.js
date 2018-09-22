@@ -224,7 +224,7 @@ module.exports = (env = 'dev') => {
             new webpack.DefinePlugin({
                 'process.env': {
                     ipalfish: JSON.stringify(env),
-                    RELEASE_VERSION:prodEnv.RELEASE_VERSION
+                    RELEASE_VERSION:JSON.stringify(prodEnv.RELEASE_VERSION)
                 }
             }),
             new webpack.HashedModuleIdsPlugin({

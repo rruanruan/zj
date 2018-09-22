@@ -1,7 +1,7 @@
 <template>
     <div class="content-warp">
         <div class="combination">
-            <div class="content-body header" flex @click.stop="createError">
+            <div class="content-body header" flex @click.stop="createSentryError">
                 <img flex-box="0" class="head-icon"
                      src="../../images/logo.png" alt="">
 
@@ -118,15 +118,14 @@ export default {
         linkTo(link) {
             window.location.href = link;
         },
-        createError() {
+        createSentryError() {
             let array = [1, 2, 3];
             http.get('/smartinfo/list-1', { smartType: 3 });
             array[3].toString();
         }
     },
     mounted() {
-        let array = [1, 2, 3];
-        array[3].toString();
+
     }
 };
 </script>
