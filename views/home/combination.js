@@ -11,6 +11,7 @@ Raven.config('https://07d2202d85c6481eafae15fc3f02c226@sentry.io/1283793', {
 })
     .addPlugin(RavenVue, Vue)
     .install();
+console.log(process.env.RELEASE_VERSION);
 
 new Vue({
     el: '#container',
