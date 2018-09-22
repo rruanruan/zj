@@ -215,7 +215,7 @@ module.exports = (env = 'dev') => {
     config.output.path = path.resolve(__dirname, `${output.path}/land`);
     if (env === 'prod' || env === 'stage' || env === 'test') {
         console.log('------->', env);
-        config.devtool = '#nosource-source-map';
+        config.devtool = 'none';
         config.mode = 'production';
 
         config.output.filename = `[name].[chunkhash:8].js`;
@@ -223,6 +223,7 @@ module.exports = (env = 'dev') => {
         config.plugins = (config.plugins || []).concat([
             new webpack.DefinePlugin({
                 'process.env': {
+                    NODE_ENV:JSON.stringify('production'),
                     ipalfish: JSON.stringify(env),
                     RELEASE_VERSION:JSON.stringify(prodEnv.RELEASE_VERSION)
                 }
