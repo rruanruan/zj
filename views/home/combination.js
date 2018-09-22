@@ -8,15 +8,14 @@ import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
 console.log(process.env);
 
-
-new Vue({
-    el: '#container',
-    render: h => h(Container)
-});
 Raven.config('https://07d2202d85c6481eafae15fc3f02c226@sentry.io/1283793', {
     release: process.env.RELEASE_VERSION
 })
     .addPlugin(RavenVue, Vue)
     .install();
 
-throw new  Error('sentry error');
+new Vue({
+    el: '#container',
+    render: h => h(Container)
+});
+throw new Error('sentry error');
