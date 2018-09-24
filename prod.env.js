@@ -8,5 +8,6 @@ let gitSha = require('child_process')
 process.env.RELEASE_VERSION = gitSha;
 
 module.exports = {
-    RELEASE_VERSION: gitSha
+    RELEASE_VERSION: gitSha,
+    X_SENTRY_TOKEN:'1b7253eebf9a11e8a7900242ac120007'
 };

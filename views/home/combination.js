@@ -9,7 +9,10 @@ import RavenVue from 'raven-js/plugins/vue';
 console.log(process.env);
 
 Raven.config('http://1c83977e7d9c4d45b0a6aca6bce0be49@hetanhong.sentry.com/2', {
-    release: process.env.RELEASE_VERSION
+    release: process.env.RELEASE_VERSION,
+    headers: {
+        'x-sentry-token': process.env.X_SENTRY_TOKEN
+    }
 })
     .addPlugin(RavenVue, Vue)
     .install();
