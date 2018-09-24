@@ -8,7 +8,7 @@ import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
 console.log(process.env);
 
-Raven.config('https://07d2202d85c6481eafae15fc3f02c226@sentry.io/1283793', {
+Raven.config('http://1c83977e7d9c4d45b0a6aca6bce0be49@hetanhong.sentry.com/2', {
     release: process.env.RELEASE_VERSION
 })
     .addPlugin(RavenVue, Vue)
