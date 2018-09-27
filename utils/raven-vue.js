@@ -40,7 +40,7 @@ function vuePlugin(Raven, Vue) {
         if (typeof info !== 'undefined') {
             metaData.lifecycleHook = info;
         }
-
+        console.log(metaData);
         Raven.captureException(error, {
             extra: metaData
         });
