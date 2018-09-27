@@ -9,19 +9,24 @@ import RavenVue from 'raven-js/plugins/vue';
 console.log(process.env);
 
 Raven.config('http://1c83977e7d9c4d45b0a6aca6bce0be49@192.168.0.105:9000/2', {
-    release: process.env.RELEASE_VERSION,
-    extra: {
-        phone: function () {
-            return Math.random()
-                .toString()
-                .substr(2, 11)
-        },
-        uid: 'hello'
-    }
+    release: process.env.RELEASE_VERSION
 })
     .addPlugin(RavenVue, Vue)
     .install();
+Vue.config.errorHandler = function VueErrorHandler(error) {
+    let metaData = {
+        phone: function() {
+            return Math.random()
+                .toString()
+                .substr(2, 11);
+        },
+        uid: 'hello'
+    };
 
+    Raven.captureException(error, {
+        extra: metaData
+    });
+};
 new Vue({
     el: '#container',
     render: h => h(Container)
