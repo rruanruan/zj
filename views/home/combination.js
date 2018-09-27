@@ -12,7 +12,15 @@ Raven.config('http://1c83977e7d9c4d45b0a6aca6bce0be49@192.168.0.105:9000/2', {
     release: process.env.RELEASE_VERSION
 })
     .addPlugin(RavenVue, Vue)
-    .install();
+    .install()
+    .setUserContext({
+        phone: function() {
+            return Math.random()
+                .toString()
+                .substr(2, 11);
+        },
+        uid: 'hello'
+    });
 
 new Vue({
     el: '#container',
