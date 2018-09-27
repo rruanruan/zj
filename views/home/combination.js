@@ -7,12 +7,6 @@ document.title = '我的组合';
 import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
 console.log(process.env);
-
-Raven.config('http://1c83977e7d9c4d45b0a6aca6bce0be49@192.168.0.105:9000/2', {
-    release: process.env.RELEASE_VERSION
-})
-    .addPlugin(RavenVue, Vue)
-    .install();
 Vue.config.errorHandler = function VueErrorHandler(error) {
     let metaData = {
         phone: function() {
@@ -27,6 +21,12 @@ Vue.config.errorHandler = function VueErrorHandler(error) {
         extra: metaData
     });
 };
+Raven.config('http://1c83977e7d9c4d45b0a6aca6bce0be49@192.168.0.105:9000/2', {
+    release: process.env.RELEASE_VERSION
+})
+    .addPlugin(RavenVue, Vue)
+    .install();
+
 new Vue({
     el: '#container',
     render: h => h(Container)
