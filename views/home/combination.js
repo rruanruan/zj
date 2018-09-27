@@ -8,10 +8,11 @@ import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
 console.log(process.env);
 
-Raven.config('http://1c83977e7d9c4d45b0a6aca6bce0be49@192.168.1.102:9000/2', {
+Raven.config('http://1c83977e7d9c4d45b0a6aca6bce0be49@192.168.0.105:9000/2', {
     release: process.env.RELEASE_VERSION,
-    headers: {
-        'x-sentry-token': process.env.X_SENTRY_TOKEN
+    extra:{
+        date:new Date(),
+        uid:'0000'
     }
 })
     .addPlugin(RavenVue, Vue)
