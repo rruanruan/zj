@@ -1,13 +1,13 @@
 <template>
     <div class="content-warp">
         <div class="combination">
-            <div class="content-body header" flex>
+            <div class="content-body header" flex @click.stop="createSentryError">
                 <img flex-box="0" class="head-icon"
                      src="../../images/logo.png" alt="">
 
                 <div flex-box="1" flex="cross:center">
                     <div>
-                        <p class="head-name">王先生</p>
+                        <p class="head-name">王先生12</p>
                         <p class="head-info">资深投资者</p>
                     </div>
 
@@ -101,25 +101,32 @@
 </template>
 
 <script>
-    import '../../less/home/combination.less';
-    import Tabs from '../../components/Tabs';
+import 'less/home/combination.less';
+import Tabs from 'components/Tabs';
+import http from 'utils/http';
 
-    export default {
-        name: 'Combination',
-        data() {
-            return {};
+export default {
+    name: 'Combination',
+    data() {
+        return {};
+    },
+    props: [],
+    components: { Tabs },
+    computed: {},
+    created() {},
+    methods: {
+        linkTo(link) {
+            window.location.href = link;
         },
-        props: [],
-        components: {Tabs},
-        computed: {},
-        created() {
-        },
-        methods: {
-            linkTo(link) {
-                window.location.href = link;
-            }
-        },
-        mounted() {
+        createSentryError() {
+            let array = [1, 2, 3];
+            let three = array[3];
+            console.log(three[3]);
         }
+    },
+    async mounted() {
+        let data = await http.get('/smartinfo/list', { smartType: 3 });
+        console.log(data[3]);
     }
+};
 </script>

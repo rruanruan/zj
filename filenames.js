@@ -36,7 +36,7 @@ function pushFiles(files, subDir) {
 
 console.log(fileNames);
 if (fileNames.length === 0) {
-    console.log('no files build.sh');
+    console.log('no files build');
     process.exit(0);
 }
 module.exports = fileNames;
