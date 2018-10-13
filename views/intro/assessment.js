@@ -3,7 +3,7 @@ import '../../node_modules/flex.css/dist/flex.css';
 import Vue from 'vue';
 import Assessment from '../../containers/intro/Assessment';
 
-document.title = '测评';
+document.title = '自定义策略';
 
 new Vue({
     el: '#container',
