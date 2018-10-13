@@ -31,11 +31,11 @@
 </template>
 
 <script>
-import '../../less/comb/comb-list.less';
-import http from '../../utils/http';
-import dateFormat from '../../utils/date-format';
+import 'less/comb/comb-list.less';
+import http from 'utils/http';
+import dateFormat from 'utils/date-format';
 import { MessageBox, Toast } from 'mint-ui';
-import Picker from '../../components/Picker';
+import Picker from 'components/Picker';
 
 export default {
     name: 'CombList',
@@ -136,7 +136,8 @@ export default {
             let res = await http.post('/investment/strategy/trans', data);
             if (res.code === 200) {
                 Toast('调仓成功');
-                this.currentStage.strategyUuid = target.strategyUuid;
+                this.getList();
+
             }
         },
         linkDetail(item) {
