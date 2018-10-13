@@ -7,7 +7,7 @@
 
                 <div flex-box="1" flex="cross:center">
                     <div>
-                        <p class="head-name">王先生</p>
+                        <p class="head-name">王先生12</p>
                         <p class="head-info">资深投资者</p>
                     </div>
 
@@ -101,9 +101,9 @@
 </template>
 
 <script>
-import '../../less/home/combination.less';
-import Tabs from '../../components/Tabs';
-import http from '../../utils/http';
+import 'less/home/combination.less';
+import Tabs from 'components/Tabs';
+import http from 'utils/http';
 
 export default {
     name: 'Combination',
@@ -125,11 +125,8 @@ export default {
         }
     },
     async mounted() {
-        let array = [1, 2, 3];
         let data = await http.get('/smartinfo/list', { smartType: 3 });
         console.log(data[3]);
-
-        array[3][3] = 4;
     }
 };
 </script>

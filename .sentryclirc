@@ -3,7 +3,7 @@
 [defaults]
 url = http://192.168.0.105:9000/
 org = sentry
-project = web
+project = source-map-test
 
 [auth]
 token = c2240fbd9c6f4566b6ba14d17245709a33ea1ad794b145d698b7909dc60d169e
