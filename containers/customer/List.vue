@@ -11,11 +11,11 @@
                  @click.stop="showDetail(item)"
                  flex
                  :key="index">
-                <span flex-box="0" class="time">{{item.time}}</span>
-                <span flex-box="0" class="name">{{item.name}}</span>
+                <span flex-box="0" class="time">{{dateFormat(item.updateTime,'yyyy.M.d')}}</span>
+                <span flex-box="0" class="name">{{item.opinionName}}</span>
 
                 <div flex-box="1" class="operate">
-                    {{truncation(item.view)}}
+                    {{truncation(item.deleteFlag)}}
                 </div>
             </div>
         </div>
@@ -24,55 +24,60 @@
 </template>
 
 <script>
-    import '../../less/customer/list.less';
-    import Modal from '../../components/Modal';
+import 'less/customer/list.less';
+import Modal from 'components/Modal';
+import http from 'utils/http';
+import dateFormat from 'utils/date-format';
 
-    export default {
-        name: 'List',
-        data() {
-            return {
-                list: [{
-                    time: '2018.3.4',
-                    name: '投顾看法A',
-                    view: '梵蒂冈还是规范但是官方，i第三国际第三国际苦上加苦放大尚方宝剑吧不减肥的接口, i第三国际第三国际苦上加苦放大尚方宝剑吧不减肥的接口'
-                }, {
-                    time: '2018.5.4',
-                    name: '投顾看法B',
-                    view: '就撒返回放大是公开的好时光还是规范但是官方,i第三国际第三国际苦上加苦放大尚方宝剑吧不减肥的接口， i第三国际第三国际苦上加苦放大尚方宝剑吧不减肥的接口'
-                }],
-                modalOpt: {
-                    show: false,
-                    title: '',
-                    content: '',
-                    callback: () => {
-                        this.modalOpt.show = false
-                    }
+export default {
+    name: 'List',
+    data() {
+        return {
+            list: [],
+            modalOpt: {
+                show: false,
+                title: '',
+                content: '',
+                callback: () => {
+                    this.modalOpt.show = false;
                 }
-            };
+            }
+        };
+    },
+    props: [],
+    components: { Modal },
+    computed: {},
+    created() {
+        this.getList();
+    },
+    methods: {
+        dateFormat(time, format) {
+            let date = new Date(time);
+            return dateFormat.format(date, format);
         },
-        props: [],
-        components: {Modal},
-        computed: {},
-        created() {
-        },
-        methods: {
-            showDetail(item) {
-                console.log(item);
-                this.modalOpt.title = item.name;
-                this.modalOpt.content = item.view;
-                this.modalOpt.show = true;
-            },
-            truncation(str) {
-                if (!str) {
-                    return '';
-                }
-                if (str.length > 20) {
-                    return str.substr(0, 20) + '...';
-                }
-                return str;
+        async getList() {
+            let res = await http.get('investment/opinion/list');
+            console.log(res);
+            if (res.code === 200) {
+                this.list = res.data;
             }
         },
-        mounted() {
+        showDetail(item) {
+            console.log(item);
+            this.modalOpt.title = item.opinionName;
+            this.modalOpt.content = item.deleteFlag;
+            this.modalOpt.show = true;
+        },
+        truncation(str) {
+            if (!str) {
+                return '';
+            }
+            if (str.length > 20) {
+                return str.substr(0, 20) + '...';
+            }
+            return str;
         }
-    }
+    },
+    mounted() {}
+};
 </script>
