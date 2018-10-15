@@ -1,7 +1,7 @@
 <template>
     <div class="content-warp">
         <div class="combination">
-            <div class="content-body header" flex @click.stop="createSentryError">
+            <div class="content-body header" flex>
                 <img flex-box="0" class="head-icon"
                      src="../../images/logo.png" alt="">
 
@@ -57,7 +57,7 @@
                           <img src="../../images/arrow-right.png" alt="">
                       </div>
                   </div>-->
-                <div class="item" flex>
+                <div class="item" flex @click.stop="linkTo('../silo/list.html')">
                     <div flex-box="1" flex="cross:center">
                         <div class="item-icon">
                             <img src="../../images/combination/dcxx.png"/>
