@@ -1,13 +1,19 @@
 <template>
     <div class="assessment">
         <div class="content">
-            <div class="qu-title">{{question}}</div>
-            <div class="qu-item" :class="{'active':index==currentIndex}"
-                 @click.stop="selectItem(item,index)"
-                 v-for="(item,index) in answers" :key="index">
-                {{item.title}}
+            <div class="choosen-txt">
+                {{choosenArr.join('')}}
             </div>
-            <div class="last-item" v-if="quIndex" @click.stop="getLast()">上一题</div>
+            <div class="qu-title">{{question}}</div>
+            <ul>
+                <li class="qu-item" :class="{'active':index==currentIndex}"
+                    @click.stop="selectItem(item,index)"
+                    v-for="(item,index) in answers" :key="index">
+                    {{item.title}}
+                </li>
+            </ul>
+
+            <div class="last-item" v-if="quIndex" @click.stop="getLast()">重新选择</div>
         </div>
         <div class="submit" v-if="showSubmit">
             <button class="btn-primary btn-submit"
@@ -37,7 +43,9 @@
                 answers: [],
                 options: [],
                 quesNum: [],
-                showSubmit: false
+                showSubmit: false,
+                choosenArr:[],
+                prefixTitle:''
             }
         },
         created() {
@@ -47,28 +55,40 @@
         methods: {
             setIndex() {
                 console.log(this.options);
-
                 let qu = questions[this.quIndex];
                 this.question = qu.question;
                 this.answers = qu.answers;
+                if(qu.showTitle){
+                    this.prefixTitle = qu.question+':' ;
+                    if(this.quIndex!==0){
+                        this.prefixTitle='/'+this.prefixTitle;
+                    }
+                }else{
+                    this.prefixTitle ='、'
+                }
             },
             getLast() {
                 if (this.showSubmit) {
                     this.showSubmit = false;
                     this.options.pop();
+                    this.choosenArr.pop();
                 }
 
                 this.quIndex = this.quesNum.pop();
                 this.setIndex();
 
                 this.options.pop();
+                this.choosenArr.pop();
                 this.currentIndex = 99;
             },
             selectItem(item, index) {
                 this.showSubmit = !(item.next);
                 if (this.currentIndex !== 99 && !item.next) {
                     this.options.pop();
+                    this.choosenArr.pop();
                     this.options.push(item.order);
+                    this.choosenArr.push(this.prefixTitle+item.title);
+                    console.log(this.choosenArr);
                     console.log(this.options, 'options--change');
                     this.currentIndex = index;
                     return false;
@@ -80,6 +100,8 @@
                 }
                 timer = setTimeout(() => {
                     this.options.push(item.order);
+                    this.choosenArr.push(this.prefixTitle+item.title);
+                    console.log(this.choosenArr);
                     if (!item.next) {
                         console.log(this.arrayCal(this.options), 'options');
                         return false;
@@ -95,10 +117,10 @@
             updateUserInfo() {
 
             },
-            arrayCal(arr){
+            arrayCal(arr) {
                 let result = [];
-                arr.map(item=>{
-                    if(item !==undefined){
+                arr.map(item => {
+                    if (item !== undefined) {
                         result.push(item);
                     }
                 })

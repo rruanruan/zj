@@ -1,6 +1,7 @@
 export default [
     {
-        question: '投资标的：',
+        question: '投资标的',
+        showTitle:true,
         answers: [
             {
                 title: '基金',
@@ -39,6 +40,7 @@ export default [
     },
     {
         question: 'Alpha预测模型',
+        showTitle:true,
         answers: [
             {
                 title: '线性回归',
@@ -75,6 +77,7 @@ export default [
     },
     {
         question: '风险模型',
+        showTitle:true,
         last:1,
         answers: [
             {
@@ -93,7 +96,7 @@ export default [
 
             },
             {
-                title: '风险评价',
+                title: '风险平价',
                 order: 3
 
             }
