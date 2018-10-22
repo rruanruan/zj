@@ -1,9 +1,9 @@
 <template>
     <div class="content-warp">
         <div class="list-header" flex>
-            <span flex-box="0" class="time">时间</span>
-            <span flex-box="0" class="name">名称</span>
-            <span flex-box="1">看法</span>
+            <span flex-box="0" class="time">创建时间</span>
+            <span flex-box="0" class="name">策略名称</span>
+            <span flex-box="1">操作内容</span>
 
         </div>
         <div class="customer-list">
@@ -11,11 +11,11 @@
                  @click.stop="showDetail(item)"
                  flex
                  :key="index">
-                <span flex-box="0" class="time">{{dateFormat(item.updateTime,'yyyy.M.d')}}</span>
-                <span flex-box="0" class="name">{{item.opinionName}}</span>
+                <span flex-box="0" class="time">{{dateFormat(item.createTime,'yyyy.M.d')}}</span>
+                <span flex-box="0" class="name">{{item.strategyName}}</span>
 
                 <div flex-box="1" class="operate">
-                    {{truncation(item.deleteFlag)}}
+                    {{truncation(item.strategyChangeContent)}}
                 </div>
             </div>
         </div>
@@ -24,13 +24,12 @@
 </template>
 
 <script>
-import 'less/customer/list.less';
+    import 'less/customer/list.less';
 import Modal from 'components/Modal';
 import http from 'utils/http';
 import dateFormat from 'utils/date-format';
-
 export default {
-    name: 'List',
+    name: 'list',
     data() {
         return {
             list: [],
@@ -47,25 +46,25 @@ export default {
     props: [],
     components: { Modal },
     computed: {},
-    created() {
-        this.getList();
-    },
+    created() {},
     methods: {
         dateFormat(time, format) {
+            if (typeof time !== 'number') {
+                return time;
+            }
             let date = new Date(time);
             return dateFormat.format(date, format);
         },
         async getList() {
-            let res = await http.get('investment/opinion/list');
-            console.log(res);
+            let res = await http.get('/investment/transfer/list', { userUuid: '0000' });
             if (res.code === 200) {
                 this.list = res.data;
             }
         },
         showDetail(item) {
             console.log(item);
-            this.modalOpt.title = item.opinionName;
-            this.modalOpt.content = item.deleteFlag;
+            this.modalOpt.title = item.strategyName;
+            this.modalOpt.content = item.strategyChangeContent;
             this.modalOpt.show = true;
         },
         truncation(str) {
@@ -78,6 +77,8 @@ export default {
             return str;
         }
     },
-    mounted() {}
+    mounted() {
+        this.getList();
+    }
 };
 </script>
