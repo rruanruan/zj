@@ -1,15 +1,15 @@
 <template>
     <div class="assessment">
         <div class="content">
-            <div class="choosen-txt">
-                {{choosenArr.join('')}}
+            <div class="choosen-txt" v-html="choosenArr.join('')">
             </div>
             <div class="qu-title">{{question}}</div>
             <ul>
                 <li class="qu-item" :class="{'active':index==currentIndex}"
                     @click.stop="selectItem(item,index)"
-                    v-for="(item,index) in answers" :key="index">
-                    {{item.title}}
+                    v-for="(item,index) in answers" :key="index" flex>
+                    <span flex-box="1">{{item.title}}</span>
+                    <span flex-box="0">&gt</span>
                 </li>
             </ul>
 
@@ -61,7 +61,7 @@
                 if(qu.showTitle){
                     this.prefixTitle = qu.question+':' ;
                     if(this.quIndex!==0){
-                        this.prefixTitle='/'+this.prefixTitle;
+                        this.prefixTitle='  <span style="color:red">&</span> <br/>'+this.prefixTitle;
                     }
                 }else{
                     this.prefixTitle ='、'

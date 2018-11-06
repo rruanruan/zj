@@ -14,7 +14,7 @@
                     <img src="../../images/intelligence/ai.png" alt="" class="icon">
                     <p class="info">AI策略</p>
                 </div>
-                <div @click.stop="checkType(4)">
+                <div @click.stop="linkTo">
                     <img src="../../images/intelligence/custom.png" alt="" class="icon">
                     <p class="info">自定义策略</p>
                 </div>
@@ -347,6 +347,10 @@
                     this.checkType(this.type);
                 }
 
+            },
+            linkTo(){
+                console.log('sssss');
+                window.location.href ='/intro/assessment.html';
             }
         },
         mounted() {
